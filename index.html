@@ -2,378 +2,283 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Chat Rooms Online</title>
+<title>Chat Rooms</title>
 
 <style>
 :root {
-    --desktop: #3a6ea5;
+    --desktop: #008080;
+    --face: #c0c0c0;
+    --light: #ffffff;
+    --light2: #dfdfdf;
+    --dark: #808080;
+    --black: #000000;
 
-    --chrome: #ece9d8;
-    --chrome-light: #f7f5ed;
-    --chrome-border: #aca899;
-
+    --window: #c0c0c0;
+    --content: #ffffff;
     --text: #000000;
-    --muted: #666666;
 
-    --main: #ffffff;
-
-    --task-bg-top: #7ba2e7;
-    --task-bg-bottom: #6375d6;
-
-    --task-box: #d6dff7;
-    --task-header: #ffffff;
-    --task-header-text: #215dc6;
-
-    --link: #215dc6;
+    --title: #000080;
+    --title-text: #ffffff;
 
     --input: #ffffff;
+    --link: #0000ff;
 }
 
 body.dark {
-    --desktop: #172238;
+    --desktop: #1b1b1b;
+    --face: #303030;
+    --light: #5b5b5b;
+    --light2: #444444;
+    --dark: #111111;
+    --black: #000000;
 
-    --chrome: #353535;
-    --chrome-light: #444444;
-    --chrome-border: #161616;
-
+    --window: #303030;
+    --content: #202020;
     --text: #eeeeee;
-    --muted: #aaaaaa;
 
-    --main: #202020;
+    --title: #000060;
+    --title-text: #ffffff;
 
-    --task-bg-top: #344d7c;
-    --task-bg-bottom: #26355e;
-
-    --task-box: #2d3853;
-    --task-header: #3b4352;
-    --task-header-text: #a8c8ff;
-
-    --link: #9ec5ff;
-
-    --input: #181818;
+    --input: #151515;
+    --link: #8ea7ff;
 }
 
 * {
     box-sizing: border-box;
 }
 
-html,
-body {
-    min-height: 100%;
-}
-
 body {
     margin: 0;
-    padding: 20px 0;
+    padding: 24px 10px;
 
     background: var(--desktop);
-
     color: var(--text);
 
-    font-family: Tahoma, Verdana, Arial, sans-serif;
-    font-size: 11px;
+    font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
+    font-size: 12px;
 }
 
 a {
     color: var(--link);
 }
 
-.page {
-    width: 780px;
-    max-width: calc(100% - 20px);
+.window {
+    width: 720px;
+    max-width: 100%;
 
-    margin: 0 auto;
+    margin: auto;
 
-    background: var(--chrome);
+    background: var(--window);
 
-    border: 1px solid #163c74;
+    border-top: 2px solid var(--light);
+    border-left: 2px solid var(--light);
+    border-right: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
 
-    box-shadow: 2px 2px 7px rgba(0, 0, 0, .35);
+    padding: 2px;
 }
 
-
-/* top */
-
-.site-title {
-    height: 30px;
-
-    padding: 5px 8px;
-
-    color: white;
-
-    font-size: 14px;
-    font-weight: bold;
-
-    background:
-        linear-gradient(
-            to right,
-            #0a5ad7 0%,
-            #3b8cf0 55%,
-            #0a5ad7 100%
-        );
-
-    text-shadow: 1px 1px #003399;
-}
-
-.menu {
+.titlebar {
     height: 24px;
 
-    padding: 4px 7px;
+    background: var(--title);
+    color: var(--title-text);
 
-    background: var(--chrome);
+    display: flex;
+    align-items: center;
 
-    border-bottom: 1px solid var(--chrome-border);
+    padding: 3px 5px;
+
+    font-weight: bold;
 }
 
-.menu a {
-    margin-right: 18px;
+.titlebar-text {
+    flex: 1;
+}
 
+.title-buttons {
+    display: flex;
+    gap: 2px;
+}
+
+.title-button {
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0;
+
+    font-size: 10px;
+}
+
+.menubar {
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 2px 5px;
+
+    border-bottom: 1px solid var(--dark);
+}
+
+.menubar a {
     color: var(--text);
     text-decoration: none;
+
+    padding: 4px 8px;
 }
 
-.menu a:hover {
-    text-decoration: underline;
+.menubar a:hover {
+    background: var(--title);
+    color: white;
 }
 
 .toolbar {
     display: flex;
     align-items: center;
 
-    height: 38px;
+    min-height: 38px;
 
-    padding: 5px 7px;
+    padding: 5px;
 
-    background: var(--chrome-light);
-
-    border-top: 1px solid white;
-    border-bottom: 1px solid var(--chrome-border);
+    border-top: 1px solid var(--light);
+    border-bottom: 1px solid var(--dark);
 }
 
-.toolbar-link {
-    padding: 4px 9px;
-    margin-right: 3px;
-
-    color: var(--text);
-    text-decoration: none;
-
-    border: 1px solid transparent;
-}
-
-.toolbar-link:hover {
-    background: var(--chrome);
-    border-color: var(--chrome-border);
-}
-
-.toolbar-space {
+.toolbar-text {
     flex: 1;
 }
 
+.content {
+    margin: 6px;
 
-/* body */
+    background: var(--content);
+
+    border-top: 2px solid var(--dark);
+    border-left: 2px solid var(--dark);
+    border-right: 2px solid var(--light);
+    border-bottom: 2px solid var(--light);
+
+    padding: 18px;
+}
 
 .layout {
     display: grid;
-
-    grid-template-columns: 190px 1fr;
-
-    min-height: 460px;
+    grid-template-columns: 180px 1fr;
+    gap: 18px;
 }
-
-
-/* XP task pane */
 
 .sidebar {
-    padding: 10px;
+    background: var(--face);
 
-    background:
-        linear-gradient(
-            to bottom,
-            var(--task-bg-top),
-            var(--task-bg-bottom)
-        );
+    border-top: 2px solid var(--light);
+    border-left: 2px solid var(--light);
+    border-right: 2px solid var(--dark);
+    border-bottom: 2px solid var(--dark);
+
+    padding: 8px;
+
+    height: fit-content;
 }
 
-.task-box {
-    margin-bottom: 10px;
-
-    background: var(--task-box);
-
-    border-radius: 5px 5px 3px 3px;
-
-    overflow: hidden;
-}
-
-.task-title {
-    padding: 6px 8px;
-
-    background:
-        linear-gradient(
-            to right,
-            var(--task-header),
-            var(--task-box)
-        );
-
-    color: var(--task-header-text);
+.sidebar-title {
+    background: var(--title);
+    color: white;
 
     font-weight: bold;
 
-    border-radius: 5px 5px 0 0;
+    padding: 3px 5px;
+
+    margin-bottom: 8px;
 }
 
-.task-content {
-    padding: 8px 9px 9px;
-}
-
-.task-content a {
+.sidebar a {
     display: block;
-
-    margin: 5px 0;
-
-    text-decoration: none;
-}
-
-.task-content a:hover {
-    text-decoration: underline;
-}
-
-
-/* main webpage */
-
-.content {
-    padding: 22px 24px;
-
-    background: var(--main);
+    margin: 6px 2px;
 }
 
 h1 {
-    margin: 0 0 6px;
+    margin: 0 0 7px;
 
-    color: #316ac5;
-
-    font-size: 21px;
-    font-weight: normal;
+    font-size: 20px;
 }
 
-body.dark h1 {
-    color: #9ac1ff;
+.description {
+    margin-bottom: 18px;
 }
 
-.lead {
-    margin-bottom: 20px;
+fieldset {
+    border: 2px groove var(--light);
 
-    color: var(--muted);
+    padding: 12px;
 
-    font-size: 12px;
+    margin: 0;
 }
 
-.rule {
-    height: 1px;
-
-    margin: 15px 0;
-
-    background: #d6d3ce;
-}
-
-
-/* old Windows form */
-
-.groupbox {
-    position: relative;
-
-    margin-top: 20px;
-    padding: 18px 14px 14px;
-
-    border: 1px solid var(--chrome-border);
-}
-
-.group-title {
-    position: absolute;
-
-    top: -8px;
-    left: 8px;
-
+legend {
     padding: 0 5px;
-
-    background: var(--main);
-
-    font-weight: bold;
 }
 
-.form-row {
+.row {
     display: grid;
 
-    grid-template-columns: 115px 1fr;
+    grid-template-columns: 100px 1fr;
 
     align-items: center;
 
-    margin-bottom: 11px;
+    margin-bottom: 10px;
 }
 
 input {
-    height: 23px;
-
-    padding: 2px 4px;
+    width: 100%;
+    height: 24px;
 
     background: var(--input);
     color: var(--text);
 
-    border:
-        1px solid
-        #7f9db9;
+    border-top: 2px solid var(--dark);
+    border-left: 2px solid var(--dark);
+    border-right: 2px solid var(--light);
+    border-bottom: 2px solid var(--light);
 
-    font-family: Tahoma, Arial, sans-serif;
-    font-size: 11px;
+    padding: 2px 4px;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    outline: none;
 }
-
-input:focus {
-    outline: 1px solid #316ac5;
-}
-
-
-/* XP buttons */
 
 button {
-    min-width: 82px;
+    min-width: 80px;
     height: 25px;
 
-    padding: 2px 12px;
+    background: var(--face);
+    color: var(--text);
 
-    color: #000;
+    border-top: 2px solid var(--light);
+    border-left: 2px solid var(--light);
+    border-right: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
 
-    font-family: Tahoma, Arial, sans-serif;
-    font-size: 11px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #ffffff,
-            #ece9d8 55%,
-            #d8d4c8
-        );
-
-    border: 1px solid #003c74;
-    border-radius: 3px;
+    font-family: inherit;
+    font-size: 12px;
 
     cursor: pointer;
 }
 
-button:hover {
-    border-color: #e59700;
-}
-
 button:active {
-    background: #dad7ca;
+    border-top: 2px solid var(--black);
+    border-left: 2px solid var(--black);
+    border-right: 2px solid var(--light);
+    border-bottom: 2px solid var(--light);
+
+    padding-top: 3px;
+    padding-left: 5px;
 }
-
-.theme-button {
-    min-width: 75px;
-}
-
-
-/* misc */
 
 #error {
     display: none;
@@ -381,238 +286,204 @@ button:active {
     margin-top: 10px;
 
     color: #cc0000;
-
     font-weight: bold;
 }
 
 body.dark #error {
-    color: #ff8080;
+    color: #ff7070;
 }
 
-.tip {
-    margin-top: 22px;
+.notice {
+    margin-top: 16px;
 
-    padding: 9px;
+    padding: 7px;
 
-    background: var(--chrome-light);
+    background: var(--face);
 
-    border: 1px solid var(--chrome-border);
+    border-top: 2px solid var(--dark);
+    border-left: 2px solid var(--dark);
+    border-right: 2px solid var(--light);
+    border-bottom: 2px solid var(--light);
 }
 
 .statusbar {
     display: flex;
 
-    height: 23px;
+    gap: 3px;
 
-    padding: 2px;
-
-    background: var(--chrome);
+    padding: 3px;
 }
 
-.status-part {
-    padding: 3px 6px;
+.status {
+    padding: 3px 5px;
 
-    border-top: 1px solid #aca899;
-    border-left: 1px solid #aca899;
-    border-right: 1px solid white;
-    border-bottom: 1px solid white;
+    border-top: 2px solid var(--dark);
+    border-left: 2px solid var(--dark);
+    border-right: 2px solid var(--light);
+    border-bottom: 2px solid var(--light);
 }
 
-.status-main {
+.status.main {
     flex: 1;
 }
 
-.footer {
-    margin-top: 8px;
+@media (max-width: 600px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
 
-    text-align: center;
-
-    color: #dddddd;
-
-    font-size: 10px;
+    .sidebar {
+        display: none;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="page">
+<div class="window">
 
-    <div class="site-title">
-        Chat Rooms Online
+    <div class="titlebar">
+
+        <div class="titlebar-text">
+            Chat Rooms
+        </div>
+
+        <div class="title-buttons">
+            <button class="title-button">_</button>
+            <button class="title-button">□</button>
+            <button class="title-button">×</button>
+        </div>
+
     </div>
 
-    <div class="menu">
+
+    <div class="menubar">
         <a href="./">File</a>
         <a href="./">Edit</a>
         <a href="./">View</a>
-        <a href="javascript:void(0)">Favorites</a>
         <a href="javascript:void(0)">Help</a>
     </div>
 
+
     <div class="toolbar">
 
-        <a class="toolbar-link" href="./">
-            Back
-        </a>
+        <div class="toolbar-text">
+            Welcome to Chat Rooms
+        </div>
 
-        <a class="toolbar-link" href="./">
-            Home
-        </a>
-
-        <a class="toolbar-link" href="javascript:void(0)">
-            Search
-        </a>
-
-        <div class="toolbar-space"></div>
-
-        <button
-            id="themeButton"
-            class="theme-button"
-        >
-            Dark
+        <button id="themeButton">
+            Dark Mode
         </button>
 
     </div>
 
 
-    <div class="layout">
+    <div class="content">
 
-        <aside class="sidebar">
+        <div class="layout">
 
-            <div class="task-box">
+            <div class="sidebar">
 
-                <div class="task-title">
-                    Chat Tasks
+                <div class="sidebar-title">
+                    Navigation
                 </div>
 
-                <div class="task-content">
-                    <a href="#join">Join a room</a>
-                    <a href="javascript:void(0)">Help</a>
+                <a href="./">Home</a>
+                <a href="#join">Join Room</a>
+                <a href="javascript:void(0)">Help</a>
+
+                <br>
+
+                <div class="sidebar-title">
+                    Information
                 </div>
+
+                Rooms can use any number from
+                <b>0 to 1000000</b>.
 
             </div>
 
 
-            <div class="task-box">
+            <main>
 
-                <div class="task-title">
-                    Other Places
-                </div>
+                <h1>Welcome to Chat Rooms!</h1>
 
-                <div class="task-content">
-                    <a href="./">Home</a>
-                    <a href="javascript:void(0)">About Chat Rooms</a>
-                </div>
-
-            </div>
-
-
-            <div class="task-box">
-
-                <div class="task-title">
-                    Details
-                </div>
-
-                <div class="task-content">
-                    Room numbers:<br>
-                    <b>0 - 1000000</b>
-                    <br><br>
-                    No account required.
-                </div>
-
-            </div>
-
-        </aside>
-
-
-        <main class="content">
-
-            <h1>Welcome to Chat Rooms</h1>
-
-            <div class="lead">
-                A simple place to talk and share stuff with your friends.
-            </div>
-
-            <div class="rule"></div>
-
-            <p>
-                To get started, enter a nickname and choose a room number.
-                Anyone using the same number will enter the same room.
-            </p>
-
-
-            <div
-                class="groupbox"
-                id="join"
-            >
-
-                <div class="group-title">
-                    Join a Chat Room
+                <div class="description">
+                    Enter a nickname and room number to start chatting.
+                    Give the same room number to your friends so they can join you.
                 </div>
 
 
-                <div class="form-row">
+                <fieldset id="join">
 
-                    <label for="nickname">
-                        Nickname:
-                    </label>
+                    <legend>
+                        Join a Room
+                    </legend>
 
-                    <input
-                        id="nickname"
-                        maxlength="24"
-                        autocomplete="off"
-                    >
 
+                    <div class="row">
+
+                        <label for="nickname">
+                            Nickname:
+                        </label>
+
+                        <input
+                            id="nickname"
+                            maxlength="24"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <label for="room">
+                            Room:
+                        </label>
+
+                        <input
+                            id="room"
+                            type="number"
+                            min="0"
+                            max="1000000"
+                        >
+
+                    </div>
+
+
+                    <button id="joinButton">
+                        Join Room
+                    </button>
+
+
+                    <div id="error">
+                        Please enter a nickname and valid room number.
+                    </div>
+
+                </fieldset>
+
+
+                <div class="notice">
+                    <b>Note:</b>
+                    Messages are temporary and will eventually disappear.
                 </div>
 
+            </main>
 
-                <div class="form-row">
-
-                    <label for="room">
-                        Room number:
-                    </label>
-
-                    <input
-                        id="room"
-                        type="number"
-                        min="0"
-                        max="1000000"
-                        autocomplete="off"
-                    >
-
-                </div>
-
-
-                <button id="joinButton">
-                    Join
-                </button>
-
-
-                <div id="error">
-                    Please enter a nickname and a valid room number.
-                </div>
-
-            </div>
-
-
-            <div class="tip">
-                <b>Tip:</b>
-                Give your friends the same room number to meet them there.
-            </div>
-
-        </main>
+        </div>
 
     </div>
 
 
     <div class="statusbar">
 
-        <div class="status-part status-main">
-            Done
+        <div class="status main">
+            Ready
         </div>
 
-        <div class="status-part">
+        <div class="status">
             Internet
         </div>
 
@@ -621,12 +492,8 @@ body.dark #error {
 </div>
 
 
-<div class="footer">
-    Chat Rooms Online · Best viewed at 800 × 600 or higher
-</div>
-
-
 <script>
+
 const nicknameInput =
     document.getElementById("nickname");
 
@@ -643,11 +510,9 @@ const themeButton =
     document.getElementById("themeButton");
 
 
-const savedTheme =
-    localStorage.getItem("theme");
-
-
-if (savedTheme === "dark") {
+if (
+    localStorage.getItem("theme") === "dark"
+) {
     document.body.classList.add("dark");
 }
 
@@ -656,8 +521,8 @@ function updateThemeButton() {
 
     themeButton.textContent =
         document.body.classList.contains("dark")
-        ? "Light"
-        : "Dark";
+            ? "Light Mode"
+            : "Dark Mode";
 
 }
 
@@ -714,7 +579,8 @@ function joinRoom() {
     }
 
 
-    error.style.display = "none";
+    error.style.display =
+        "none";
 
 
     localStorage.setItem(
@@ -744,6 +610,7 @@ roomInput.addEventListener(
 
     }
 );
+
 </script>
 
 </body>
