@@ -2,570 +2,509 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Chat Room</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-}
-
 body {
-  margin: 0;
-  padding: 8px;
-  background: #008080;
-  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
-  font-size: 13px;
+    margin: 0;
+    background: #ffffff;
+    color: #000000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
 }
 
-.window {
-  width: 100%;
-  height: 100%;
-
-  background: #c0c0c0;
-
-  border-top: 2px solid white;
-  border-left: 2px solid white;
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
-
-  display: flex;
-  flex-direction: column;
+a {
+    color: #0000cc;
 }
 
-.titlebar {
-  height: 27px;
-  margin: 2px;
-  padding: 4px 6px;
-
-  background: #000080;
-  color: white;
-  font-weight: bold;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.page {
+    width: 750px;
+    max-width: calc(100% - 20px);
+    margin: 20px auto;
 }
 
-.title-buttons {
-  display: flex;
-  gap: 2px;
+.header {
+    background: #000080;
+    color: white;
+    padding: 6px 8px;
+    font-weight: bold;
+    font-size: 18px;
 }
 
-.title-button {
-  width: 18px;
-  height: 18px;
-  min-width: 18px;
-  padding: 0;
-
-  background: #c0c0c0;
-
-  border-top: 2px solid white;
-  border-left: 2px solid white;
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
-
-  font-size: 11px;
-  line-height: 11px;
+.navigation {
+    background: #c0c0c0;
+    border: 1px solid #808080;
+    padding: 4px 8px;
+    font-size: 11px;
 }
 
-.toolbar {
-  padding: 4px 6px;
-  border-bottom: 1px solid #808080;
+.navigation a {
+    margin-right: 15px;
 }
 
-.toolbar a {
-  color: black;
-  text-decoration: none;
-  margin-right: 18px;
-}
-
-.toolbar a:hover {
-  text-decoration: underline;
-}
-
-.chat-area {
-  flex: 1;
-  min-height: 0;
-  padding: 6px;
+.info {
+    padding: 8px 0;
 }
 
 #messages {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
+    height: 430px;
+    overflow-y: scroll;
 
-  padding: 7px;
+    border: 2px inset #dddddd;
 
-  background: white;
-  color: black;
+    padding: 8px;
 
-  border-top: 2px solid #808080;
-  border-left: 2px solid #808080;
-  border-right: 2px solid white;
-  border-bottom: 2px solid white;
+    background: #ffffff;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 13px;
 }
 
 .message {
-  margin-bottom: 10px;
+    margin-bottom: 11px;
 }
 
 .name {
-  font-weight: bold;
-  color: #000080;
+    color: #000080;
+    font-weight: bold;
+}
+
+.time {
+    color: #777777;
+    font-size: 10px;
+    margin-left: 5px;
 }
 
 .text {
-  margin-left: 10px;
-  margin-top: 2px;
-
-  white-space: pre-wrap;
-  word-break: break-word;
+    margin-left: 12px;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
-.message-time {
-  color: #808080;
-  font-size: 10px;
-  margin-left: 5px;
-  font-weight: normal;
-}
-
-.input-area {
-  padding: 6px;
-}
-
-.input-row {
-  display: flex;
-  gap: 5px;
+.send-area {
+    margin-top: 8px;
 }
 
 #messageInput {
-  flex: 1;
-  height: 28px;
+    width: calc(100% - 90px);
 
-  background: white;
+    padding: 4px;
 
-  border-top: 2px solid #808080;
-  border-left: 2px solid #808080;
-  border-right: 2px solid white;
-  border-bottom: 2px solid white;
+    border: 2px inset #dddddd;
 
-  padding: 4px 6px;
+    font-family:
+        "Courier New",
+        monospace;
 
-  font-family: Tahoma, sans-serif;
-  font-size: 13px;
-  outline: none;
+    font-size: 13px;
 }
 
 button {
-  min-width: 75px;
-  height: 28px;
-
-  background: #c0c0c0;
-
-  border-top: 2px solid white;
-  border-left: 2px solid white;
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
-
-  font-family: Tahoma, sans-serif;
-  font-size: 13px;
-
-  cursor: pointer;
-}
-
-button:active {
-  border-top: 2px solid black;
-  border-left: 2px solid black;
-  border-right: 2px solid white;
-  border-bottom: 2px solid white;
-}
-
-button:disabled {
-  color: #808080;
-}
-
-.statusbar {
-  display: flex;
-  gap: 3px;
-
-  padding: 3px;
-}
-
-.status-section {
-  padding: 3px 6px;
-
-  border-top: 2px solid #808080;
-  border-left: 2px solid #808080;
-  border-right: 2px solid white;
-  border-bottom: 2px solid white;
+    width: 80px;
+    padding: 4px;
 }
 
 #status {
-  flex: 1;
+    margin-top: 5px;
+    font-size: 10px;
+    color: #666666;
 }
 
-#nicknameStatus {
-  min-width: 140px;
+.footer {
+    margin-top: 18px;
+    border-top: 1px solid #aaaaaa;
+    padding-top: 5px;
+
+    font-size: 10px;
+    color: #777777;
 }
 </style>
 </head>
 
 <body>
 
-<div class="window">
+<div class="page">
 
-  <div class="titlebar">
-
-    <span id="roomName">Chat Room</span>
-
-    <div class="title-buttons">
-      <button class="title-button">_</button>
-      <button class="title-button">□</button>
-      <button
-        class="title-button"
-        onclick="window.location.href='./'"
-      >×</button>
+    <div
+        class="header"
+        id="roomName"
+    >
+        Chat Room
     </div>
 
-  </div>
+    <div class="navigation">
+        <a href="./">Home</a>
+        <a href="./">Leave Room</a>
+        <span id="username"></span>
+    </div>
 
-  <div class="toolbar">
-    <a href="./">File</a>
-    <a href="./">Leave Room</a>
-  </div>
+    <div class="info">
+        Messages in this room are temporary.
+    </div>
 
-  <div class="chat-area">
-    <div id="messages"></div>
-  </div>
+    <div id="messages">
+    </div>
 
-  <div class="input-area">
+    <div class="send-area">
 
-    <div class="input-row">
+        <input
+            id="messageInput"
+            maxlength="2000"
+            autocomplete="off"
+        >
 
-      <input
-        id="messageInput"
-        type="text"
-        maxlength="2000"
-        autocomplete="off"
-        placeholder="Type a message..."
-      >
-
-      <button id="sendButton">
-        Send
-      </button>
+        <button id="sendButton">
+            Send
+        </button>
 
     </div>
 
-  </div>
-
-  <div class="statusbar">
-
-    <div id="status" class="status-section">
-      Connecting...
+    <div id="status">
+        Connecting...
     </div>
 
-    <div id="nicknameStatus" class="status-section">
-      User
+    <div class="footer">
+        Chat Rooms
     </div>
-
-  </div>
 
 </div>
 
-<script type="module">
 
-import {
-  createClient
-} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
 
 const SUPABASE_URL =
-  "https://jorkumfnpkjkkjvlwfmq.supabase.co";
+    "https://jorkumfnpkjkkjvlwfmq.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_90otUNYd51yG0oH20wdwxA_-9FeVxsi";
+    "sb_publishable_90otUNYd51yG0oH20wdwxA_-9FeVxsi";
 
 
-const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const client =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
 const params =
-  new URLSearchParams(window.location.search);
+    new URLSearchParams(
+        window.location.search
+    );
+
 
 const rawRoom =
-  params.get("room");
+    params.get("room");
 
 const room =
-  Number(rawRoom);
-
-const nickname =
-  localStorage.getItem("nickname") || "Guest";
-
-
-const roomName =
-  document.getElementById("roomName");
-
-const messages =
-  document.getElementById("messages");
-
-const messageInput =
-  document.getElementById("messageInput");
-
-const sendButton =
-  document.getElementById("sendButton");
-
-const status =
-  document.getElementById("status");
-
-const nicknameStatus =
-  document.getElementById("nicknameStatus");
-
-
-const seenMessages = new Set();
+    Number(rawRoom);
 
 
 if (
-  rawRoom === null ||
-  rawRoom.trim() === "" ||
-  !Number.isInteger(room) ||
-  room < 0 ||
-  room > 1000000
+    rawRoom === null ||
+    rawRoom === "" ||
+    !Number.isInteger(room) ||
+    room < 0 ||
+    room > 1000000
 ) {
-  window.location.href = "./";
+    window.location.href = "./";
 }
 
 
-roomName.textContent =
-  "Room " + room + " - Chat";
-
-nicknameStatus.textContent =
-  "User: " + nickname;
+const nickname =
+    localStorage.getItem("nickname")
+    || "Guest";
 
 
-function formatTime(dateString) {
+const messages =
+    document.getElementById("messages");
 
-  const date = new Date(dateString);
+const messageInput =
+    document.getElementById("messageInput");
 
-  return date.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
+const sendButton =
+    document.getElementById("sendButton");
+
+const statusText =
+    document.getElementById("status");
+
+
+document.getElementById(
+    "roomName"
+).textContent =
+    "Chat Room #" + room;
+
+
+document.getElementById(
+    "username"
+).textContent =
+    "Logged in as: " + nickname;
+
+
+const seen =
+    new Set();
+
+
+function timeText(value) {
+
+    const date =
+        new Date(value);
+
+    return date.toLocaleTimeString(
+        [],
+        {
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
 }
 
 
-function showMessage(data) {
+function displayMessage(data) {
 
-  if (seenMessages.has(data.id)) {
-    return;
-  }
+    if (seen.has(data.id)) {
+        return;
+    }
 
-  seenMessages.add(data.id);
-
-
-  const message =
-    document.createElement("div");
-
-  message.className = "message";
+    seen.add(data.id);
 
 
-  const name =
-    document.createElement("div");
+    const message =
+        document.createElement("div");
 
-  name.className = "name";
-
-  name.textContent =
-    data.nickname || "Guest";
+    message.className =
+        "message";
 
 
-  if (data.created_at) {
-
-    const time =
-      document.createElement("span");
-
-    time.className = "message-time";
-
-    time.textContent =
-      "[" + formatTime(data.created_at) + "]";
-
-    name.appendChild(time);
-  }
+    const header =
+        document.createElement("div");
 
 
-  const text =
-    document.createElement("div");
+    const name =
+        document.createElement("span");
 
-  text.className = "text";
+    name.className =
+        "name";
 
-  text.textContent =
-    data.message || "";
+    name.textContent =
+        data.nickname || "Guest";
 
 
-  message.appendChild(name);
-  message.appendChild(text);
+    header.appendChild(name);
 
-  messages.appendChild(message);
 
-  messages.scrollTop =
-    messages.scrollHeight;
+    if (data.created_at) {
+
+        const time =
+            document.createElement("span");
+
+        time.className =
+            "time";
+
+        time.textContent =
+            "[" +
+            timeText(data.created_at) +
+            "]";
+
+        header.appendChild(time);
+    }
+
+
+    const text =
+        document.createElement("div");
+
+    text.className =
+        "text";
+
+    text.textContent =
+        data.message || "";
+
+
+    message.appendChild(header);
+    message.appendChild(text);
+
+    messages.appendChild(message);
+
+
+    messages.scrollTop =
+        messages.scrollHeight;
 }
 
 
 async function loadMessages() {
 
-  status.textContent =
-    "Loading messages...";
+    statusText.textContent =
+        "Loading messages...";
 
 
-  const {
-    data,
-    error
-  } = await supabase
+    const {
+        data,
+        error
+    } = await client
 
-    .from("messages")
+        .from("messages")
 
-    .select("*")
+        .select("*")
 
-    .eq("room", room)
+        .eq(
+            "room",
+            room
+        )
 
-    .order("created_at", {
-      ascending: true
-    });
-
-
-  if (error) {
-
-    console.error(error);
-
-    status.textContent =
-      "Error loading messages";
-
-    return;
-  }
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
+        );
 
 
-  for (const message of data) {
-    showMessage(message);
-  }
+    if (error) {
+
+        console.error(error);
+
+        statusText.textContent =
+            "Error loading messages.";
+
+        return;
+    }
 
 
-  status.textContent =
-    "Connected";
+    for (const message of data) {
+        displayMessage(message);
+    }
+
+
+    statusText.textContent =
+        "Connected.";
 }
 
 
 async function sendMessage() {
 
-  const text =
-    messageInput.value.trim();
+    const text =
+        messageInput.value.trim();
 
 
-  if (!text) {
-    return;
-  }
+    if (!text) {
+        return;
+    }
 
 
-  sendButton.disabled = true;
+    sendButton.disabled =
+        true;
 
 
-  const {
-    data,
-    error
-  } = await supabase
+    const {
+        data,
+        error
+    } = await client
 
-    .from("messages")
+        .from("messages")
 
-    .insert({
-      room: room,
-      nickname: nickname,
-      message: text
-    })
+        .insert({
+            room: room,
+            nickname: nickname,
+            message: text
+        })
 
-    .select()
+        .select()
 
-    .single();
-
-
-  sendButton.disabled = false;
+        .single();
 
 
-  if (error) {
-
-    console.error(error);
-
-    status.textContent =
-      "Message failed to send";
-
-    return;
-  }
+    sendButton.disabled =
+        false;
 
 
-  messageInput.value = "";
+    if (error) {
 
-  showMessage(data);
+        console.error(error);
 
-  status.textContent =
-    "Connected";
+        statusText.textContent =
+            "Message could not be sent.";
 
-  messageInput.focus();
+        return;
+    }
+
+
+    messageInput.value =
+        "";
+
+
+    displayMessage(data);
+
+
+    statusText.textContent =
+        "Connected.";
+
+
+    messageInput.focus();
 }
 
 
 sendButton.addEventListener(
-  "click",
-  sendMessage
+    "click",
+    sendMessage
 );
 
 
 messageInput.addEventListener(
-  "keydown",
-  event => {
+    "keydown",
+    function(event) {
 
-    if (event.key === "Enter") {
-      sendMessage();
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+
     }
-
-  }
 );
 
 
-const channel = supabase
+client
+    .channel(
+        "room-" + room
+    )
 
-  .channel("room-" + room)
+    .on(
+        "postgres_changes",
 
-  .on(
+        {
+            event: "INSERT",
+            schema: "public",
+            table: "messages",
+            filter:
+                "room=eq." + room
+        },
 
-    "postgres_changes",
+        function(payload) {
+            displayMessage(
+                payload.new
+            );
+        }
+    )
 
-    {
-      event: "INSERT",
-      schema: "public",
-      table: "messages",
-      filter: "room=eq." + room
-    },
+    .subscribe(
+        function(state) {
 
-    payload => {
-      showMessage(payload.new);
-    }
+            if (
+                state ===
+                "SUBSCRIBED"
+            ) {
 
-  )
+                statusText.textContent =
+                    "Connected.";
 
-  .subscribe(statusValue => {
+            }
 
-    if (statusValue === "SUBSCRIBED") {
-      status.textContent = "Connected";
-    }
-
-  });
+        }
+    );
 
 
 loadMessages();
