@@ -8,39 +8,43 @@
 
 <style>
 :root {
-    --page-bg: #d6d6c8;
-    --surface: #c0c0c0;
-    --surface-light: #ffffff;
-    --surface-dark: #808080;
+    --page: #e7eef8;
+    --panel: #ffffff;
+    --panel2: #edf4ff;
 
-    --text: #000000;
-    --muted: #444444;
+    --text: #111;
+    --muted: #555;
 
-    --input-bg: #ffffff;
-    --input-text: #000000;
+    --blue1: #3d95ff;
+    --blue2: #0b54b5;
+    --blue3: #003c9d;
 
-    --chat-bg: #ffffff;
+    --border: #7f9db9;
 
-    --blue: #000080;
-    --link: #0000ee;
+    --chat: #ffffff;
+    --input: #ffffff;
+
+    --link: #0645ad;
 }
 
 body.dark {
-    --page-bg: #161616;
-    --surface: #303030;
-    --surface-light: #555555;
-    --surface-dark: #080808;
+    --page: #15191f;
+    --panel: #242a32;
+    --panel2: #1d232b;
 
     --text: #eeeeee;
-    --muted: #bbbbbb;
+    --muted: #aaaaaa;
 
-    --input-bg: #181818;
-    --input-text: #eeeeee;
+    --blue1: #315f99;
+    --blue2: #193d70;
+    --blue3: #102849;
 
-    --chat-bg: #181818;
+    --border: #566578;
 
-    --blue: #202070;
-    --link: #7f9fff;
+    --chat: #171b21;
+    --input: #171b21;
+
+    --link: #86b7ff;
 }
 
 * {
@@ -50,65 +54,80 @@ body.dark {
 body {
     margin: 0;
 
-    background: var(--page-bg);
+    background: var(--page);
     color: var(--text);
 
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Tahoma, Arial, sans-serif;
     font-size: 13px;
 }
 
 .site {
-    width: 820px;
+    width: 850px;
     max-width: calc(100% - 20px);
 
     margin: 18px auto;
 }
 
-.top {
-    background: var(--surface);
+.header {
+    border: 1px solid #164989;
+    border-radius: 8px 8px 0 0;
 
-    border-top: 2px solid var(--surface-light);
-    border-left: 2px solid var(--surface-light);
-    border-right: 2px solid var(--surface-dark);
-    border-bottom: 2px solid var(--surface-dark);
+    overflow: hidden;
+}
+
+.header-top {
+    padding: 10px 14px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--blue1),
+            var(--blue2) 55%,
+            var(--blue3)
+        );
+
+    color: white;
 }
 
 .logo {
-    padding: 10px;
-
     font-size: 21px;
     font-weight: bold;
 
-    color: #000080;
-
-    text-shadow: 1px 1px white;
+    text-shadow: 1px 1px #003377;
 }
 
-body.dark .logo {
-    color: #9da8ff;
-    text-shadow: 1px 1px black;
-}
-
-.menu {
-    min-height: 28px;
-
+.nav {
     display: flex;
     align-items: center;
 
-    padding: 3px 5px;
+    padding: 4px 6px;
 
-    border-top: 1px solid var(--surface-light);
+    background:
+        linear-gradient(
+            to bottom,
+            #ffffff,
+            #dce9f7
+        );
 }
 
-.menu a {
+body.dark .nav {
+    background: #252d37;
+}
+
+.nav a {
+    padding: 4px 9px;
+
     color: var(--text);
     text-decoration: none;
-
-    padding: 4px 9px;
 }
 
-.menu a:hover {
-    background: var(--blue);
+.nav a:hover {
+    background: #d5e7ff;
+    color: #003c9d;
+}
+
+body.dark .nav a:hover {
+    background: #37465b;
     color: white;
 }
 
@@ -117,53 +136,63 @@ body.dark .logo {
 }
 
 button {
-    background: var(--surface);
-    color: var(--text);
-
-    border-top: 2px solid var(--surface-light);
-    border-left: 2px solid var(--surface-light);
-    border-right: 2px solid var(--surface-dark);
-    border-bottom: 2px solid var(--surface-dark);
-
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
-
-    padding: 4px 12px;
-
+    font-family: Tahoma, Arial, sans-serif;
     cursor: pointer;
 }
 
-button:active {
-    border-top: 2px solid var(--surface-dark);
-    border-left: 2px solid var(--surface-dark);
-    border-right: 2px solid var(--surface-light);
-    border-bottom: 2px solid var(--surface-light);
+.theme-button {
+    padding: 3px 9px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #ffffff,
+            #d9e6f4
+        );
+
+    color: #111;
+
+    border: 1px solid #7f9db9;
+    border-radius: 3px;
 }
 
 .main {
-    margin-top: 10px;
+    margin-top: 12px;
 
-    background: var(--surface);
+    background: var(--panel);
 
-    border-top: 2px solid var(--surface-light);
-    border-left: 2px solid var(--surface-light);
-    border-right: 2px solid var(--surface-dark);
-    border-bottom: 2px solid var(--surface-dark);
+    border: 1px solid #9eafd0;
+    border-radius: 6px;
+
+    overflow: hidden;
 }
 
 .room-title {
-    background: var(--blue);
+    padding: 7px 10px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #6aa9ff,
+            #316ac5
+        );
+
     color: white;
 
+    font-size: 14px;
     font-weight: bold;
 
-    padding: 5px 8px;
+    text-shadow: 1px 1px #184b91;
 }
 
 .room-info {
-    padding: 7px 9px;
+    background: var(--panel2);
 
-    border-bottom: 1px solid var(--surface-dark);
+    padding: 7px 10px;
+
+    border-bottom: 1px solid #adc3de;
+
+    color: var(--muted);
 
     font-size: 11px;
 }
@@ -171,107 +200,123 @@ button:active {
 #messages {
     height: 430px;
 
-    margin: 8px;
+    margin: 10px;
+
+    padding: 9px;
 
     overflow-y: auto;
 
-    background: var(--chat-bg);
+    background: var(--chat);
     color: var(--text);
 
-    border-top: 2px solid var(--surface-dark);
-    border-left: 2px solid var(--surface-dark);
-    border-right: 2px solid var(--surface-light);
-    border-bottom: 2px solid var(--surface-light);
+    border: 1px solid var(--border);
 
-    padding: 8px;
-
-    font-family: "Courier New", monospace;
-    font-size: 13px;
+    font-family: Tahoma, Arial, sans-serif;
 }
 
 .message {
-    margin-bottom: 12px;
+    padding: 6px 7px;
+    margin-bottom: 4px;
+
+    border-bottom: 1px solid #d7e0eb;
+}
+
+body.dark .message {
+    border-bottom-color: #343b44;
 }
 
 .name {
-    color: #000080;
     font-weight: bold;
+    color: #245ca5;
 }
 
 body.dark .name {
-    color: #9aa7ff;
+    color: #86b7ff;
 }
 
 .time {
-    color: var(--muted);
-    font-size: 10px;
+    margin-left: 6px;
 
-    margin-left: 5px;
+    color: var(--muted);
+
+    font-size: 10px;
+    font-weight: normal;
 }
 
 .text {
-    margin-left: 12px;
     margin-top: 2px;
+    margin-left: 10px;
 
     white-space: pre-wrap;
     word-break: break-word;
 }
 
 .send-panel {
-    margin: 8px;
+    margin: 10px;
 
-    padding: 7px;
+    background: var(--panel2);
 
-    border-top: 2px solid var(--surface-light);
-    border-left: 2px solid var(--surface-light);
-    border-right: 2px solid var(--surface-dark);
-    border-bottom: 2px solid var(--surface-dark);
+    border: 1px solid #adc3de;
+    border-radius: 5px;
+
+    padding: 8px;
 }
 
 .send-row {
     display: flex;
-
     gap: 6px;
 }
 
 #messageInput {
     flex: 1;
 
-    height: 27px;
+    height: 29px;
 
-    background: var(--input-bg);
-    color: var(--input-text);
+    background: var(--input);
+    color: var(--text);
 
-    border-top: 2px solid var(--surface-dark);
-    border-left: 2px solid var(--surface-dark);
-    border-right: 2px solid var(--surface-light);
-    border-bottom: 2px solid var(--surface-light);
+    border: 1px solid var(--border);
 
-    padding: 3px 5px;
+    padding: 4px 6px;
 
-    font-family: "Courier New", monospace;
-    font-size: 13px;
+    font-family: Tahoma, Arial, sans-serif;
 }
 
 #sendButton {
-    width: 85px;
+    width: 90px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #8ed53f,
+            #4a9d16
+        );
+
+    border: 1px solid #32740e;
+    border-radius: 4px;
+
+    color: white;
+    font-weight: bold;
+
+    text-shadow: 1px 1px #376d17;
 }
 
 .statusbar {
     display: flex;
 
-    gap: 3px;
+    margin: 0 10px 10px;
 
-    padding: 3px;
+    gap: 4px;
 }
 
 .status-section {
-    padding: 4px 6px;
+    background: var(--panel2);
 
-    border-top: 2px solid var(--surface-dark);
-    border-left: 2px solid var(--surface-dark);
-    border-right: 2px solid var(--surface-light);
-    border-bottom: 2px solid var(--surface-light);
+    border: 1px solid #adc3de;
+
+    padding: 4px 7px;
+
+    color: var(--muted);
 
     font-size: 10px;
 }
@@ -288,9 +333,9 @@ body.dark .name {
     margin-top: 8px;
 
     text-align: center;
+    color: var(--muted);
 
     font-size: 10px;
-    color: var(--muted);
 }
 </style>
 </head>
@@ -299,20 +344,29 @@ body.dark .name {
 
 <div class="site">
 
-    <div class="top">
+    <div class="header">
 
-        <div class="logo">
-            Chat Rooms
+        <div class="header-top">
+            <div class="logo">
+                Chat Rooms
+            </div>
         </div>
 
-        <div class="menu">
+
+        <div class="nav">
 
             <a href="./">Home</a>
-            <a href="./">Leave Room</a>
+
+            <a href="./">
+                Leave Room
+            </a>
 
             <div class="spacer"></div>
 
-            <button id="themeButton">
+            <button
+                class="theme-button"
+                id="themeButton"
+            >
                 Dark Mode
             </button>
 
@@ -324,8 +378,8 @@ body.dark .name {
     <div class="main">
 
         <div
-            class="room-title"
             id="roomName"
+            class="room-title"
         >
             Chat Room
         </div>
@@ -347,7 +401,7 @@ body.dark .name {
                     id="messageInput"
                     maxlength="2000"
                     autocomplete="off"
-                    placeholder="Type a message..."
+                    placeholder="Type your message here..."
                 >
 
                 <button id="sendButton">
@@ -409,20 +463,14 @@ const themeButton =
     document.getElementById("themeButton");
 
 
-const savedTheme =
-    localStorage.getItem("theme");
-
-
-if (savedTheme === "dark") {
-
-    document.body.classList.add(
-        "dark"
-    );
-
+if (
+    localStorage.getItem("theme") === "dark"
+) {
+    document.body.classList.add("dark");
 }
 
 
-function updateThemeButton() {
+function updateTheme() {
 
     themeButton.textContent =
         document.body.classList.contains("dark")
@@ -432,30 +480,23 @@ function updateThemeButton() {
 }
 
 
-updateThemeButton();
+updateTheme();
 
 
-themeButton.addEventListener(
-    "click",
-    function() {
+themeButton.onclick = function() {
 
-        document.body.classList.toggle(
-            "dark"
-        );
+    document.body.classList.toggle("dark");
 
-
-        localStorage.setItem(
-            "theme",
-            document.body.classList.contains("dark")
+    localStorage.setItem(
+        "theme",
+        document.body.classList.contains("dark")
             ? "dark"
             : "light"
-        );
+    );
 
+    updateTheme();
 
-        updateThemeButton();
-
-    }
-);
+};
 
 
 const params =
@@ -478,10 +519,7 @@ if (
     room < 0 ||
     room > 1000000
 ) {
-
-    window.location.href =
-        "./";
-
+    window.location.href = "./";
 }
 
 
@@ -521,11 +559,9 @@ const seen =
 
 function formatTime(value) {
 
-    const date =
-        new Date(value);
-
-
-    return date.toLocaleTimeString(
+    return new Date(
+        value
+    ).toLocaleTimeString(
         [],
         {
             hour: "2-digit",
@@ -553,10 +589,6 @@ function displayMessage(data) {
         "message";
 
 
-    const header =
-        document.createElement("div");
-
-
     const name =
         document.createElement("span");
 
@@ -567,7 +599,7 @@ function displayMessage(data) {
         data.nickname || "Guest";
 
 
-    header.appendChild(name);
+    message.appendChild(name);
 
 
     if (data.created_at) {
@@ -584,7 +616,7 @@ function displayMessage(data) {
             "]";
 
 
-        header.appendChild(time);
+        message.appendChild(time);
 
     }
 
@@ -599,7 +631,6 @@ function displayMessage(data) {
         data.message || "";
 
 
-    message.appendChild(header);
     message.appendChild(text);
 
     messages.appendChild(message);
@@ -626,10 +657,7 @@ async function loadMessages() {
 
         .select("*")
 
-        .eq(
-            "room",
-            room
-        )
+        .eq("room", room)
 
         .order(
             "created_at",
@@ -652,9 +680,7 @@ async function loadMessages() {
 
 
     for (const message of data) {
-
         displayMessage(message);
-
     }
 
 
@@ -729,10 +755,8 @@ async function sendMessage() {
 }
 
 
-sendButton.addEventListener(
-    "click",
-    sendMessage
-);
+sendButton.onclick =
+    sendMessage;
 
 
 messageInput.addEventListener(
@@ -740,9 +764,7 @@ messageInput.addEventListener(
     function(event) {
 
         if (event.key === "Enter") {
-
             sendMessage();
-
         }
 
     }
@@ -783,10 +805,8 @@ client
             if (
                 state === "SUBSCRIBED"
             ) {
-
                 statusText.textContent =
                     "Connected";
-
             }
 
         }
