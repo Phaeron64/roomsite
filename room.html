@@ -1,114 +1,304 @@
-<script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room</title>
 
-  const SUPABASE_URL = "https://jorkumfnpkjkkjvlwfmq.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_90otUNYd51yG0oH20wdwxA_-9FeVxsi";
-
-  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-  const params = new URLSearchParams(window.location.search);
-  const room = Number(params.get("room"));
-  const nickname = localStorage.getItem("nickname") || "Guest";
-
-  const input = document.getElementById("messageInput");
-  const messages = document.getElementById("messages");
-
-  const seenMessages = new Set();
-
-  if (
-    !Number.isInteger(room) ||
-    room < 0 ||
-    room > 1000000
-  ) {
-    window.location.href = "./";
-  }
-
-  document.getElementById("roomName").textContent = "Room " + room;
-
-  function showMessage(data) {
-    if (seenMessages.has(data.id)) return;
-    seenMessages.add(data.id);
-
-    const message = document.createElement("div");
-    message.className = "message";
-
-    const name = document.createElement("div");
-    name.className = "name";
-    name.textContent = data.nickname;
-
-    const content = document.createElement("div");
-    content.className = "text";
-    content.textContent = data.message || "";
-
-    message.appendChild(name);
-    message.appendChild(content);
-    messages.appendChild(message);
-
-    messages.scrollTop = messages.scrollHeight;
-  }
-
-  async function loadMessages() {
-    const { data, error } = await supabase
-      .from("messages")
-      .select("*")
-      .eq("room", room)
-      .order("created_at", { ascending: true });
-
-    if (error) {
-      console.error(error);
-      return;
+  <style>
+    * {
+      box-sizing: border-box;
     }
 
-    data.forEach(showMessage);
-  }
-
-  window.sendMessage = async function () {
-    const text = input.value.trim();
-
-    if (!text) return;
-
-    input.value = "";
-
-    const { data, error } = await supabase
-      .from("messages")
-      .insert({
-        room: room,
-        nickname: nickname,
-        message: text
-      })
-      .select()
-      .single();
-
-    if (error) {
-      console.error(error);
-      alert("Could not send message.");
-      return;
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
     }
 
-    showMessage(data);
-  };
-
-  input.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-      window.sendMessage();
+    header {
+      padding: 15px 20px;
+      background: #181818;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-  });
 
-  supabase
-    .channel("room-" + room)
-    .on(
-      "postgres_changes",
-      {
-        event: "INSERT",
-        schema: "public",
-        table: "messages",
-        filter: "room=eq." + room
-      },
-      payload => {
-        showMessage(payload.new);
+    #roomName {
+      font-weight: bold;
+    }
+
+    header a {
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .message {
+      margin-bottom: 16px;
+    }
+
+    .name {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .text {
+      color: #ddd;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .bottom {
+      padding: 12px;
+      background: #181818;
+      border-top: 1px solid #333;
+    }
+
+    .inputRow {
+      display: flex;
+      gap: 8px;
+    }
+
+    #messageInput {
+      flex: 1;
+      padding: 12px;
+      background: #111;
+      color: white;
+      border: 1px solid #444;
+      border-radius: 7px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    #messageInput:focus {
+      border-color: #777;
+    }
+
+    button {
+      padding: 0 18px;
+      border: 0;
+      border-radius: 7px;
+      background: white;
+      color: black;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    #status {
+      margin-top: 8px;
+      color: #777;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div id="roomName">Room</div>
+    <a href="./">Leave</a>
+  </header>
+
+  <div id="messages"></div>
+
+  <div class="bottom">
+    <div class="inputRow">
+      <input
+        id="messageInput"
+        type="text"
+        maxlength="2000"
+        placeholder="Message"
+        autocomplete="off"
+      >
+
+      <button id="sendButton">
+        Send
+      </button>
+    </div>
+
+    <div id="status">Connecting...</div>
+  </div>
+
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const SUPABASE_URL =
+      "https://jorkumfnpkjkkjvlwfmq.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_90otUNYd51yG0oH20wdwxA_-9FeVxsi";
+
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const params = new URLSearchParams(window.location.search);
+    const room = Number(params.get("room"));
+
+    const nickname =
+      localStorage.getItem("nickname") || "Guest";
+
+    const roomName =
+      document.getElementById("roomName");
+
+    const messages =
+      document.getElementById("messages");
+
+    const messageInput =
+      document.getElementById("messageInput");
+
+    const sendButton =
+      document.getElementById("sendButton");
+
+    const status =
+      document.getElementById("status");
+
+    const seenMessages = new Set();
+
+    if (
+      !Number.isInteger(room) ||
+      room < 0 ||
+      room > 1000000
+    ) {
+      window.location.href = "./";
+    }
+
+    roomName.textContent = "Room " + room;
+
+    function showMessage(data) {
+      if (seenMessages.has(data.id)) {
+        return;
       }
-    )
-    .subscribe();
 
-  loadMessages();
-</script>
+      seenMessages.add(data.id);
+
+      const message = document.createElement("div");
+      message.className = "message";
+
+      const name = document.createElement("div");
+      name.className = "name";
+      name.textContent = data.nickname || "Guest";
+
+      const text = document.createElement("div");
+      text.className = "text";
+      text.textContent = data.message || "";
+
+      message.appendChild(name);
+      message.appendChild(text);
+
+      messages.appendChild(message);
+
+      messages.scrollTop =
+        messages.scrollHeight;
+    }
+
+    async function loadMessages() {
+      status.textContent = "Loading messages...";
+
+      const { data, error } = await supabase
+        .from("messages")
+        .select("*")
+        .eq("room", room)
+        .order("created_at", {
+          ascending: true
+        });
+
+      if (error) {
+        console.error(error);
+        status.textContent =
+          "Could not load messages.";
+        return;
+      }
+
+      for (const message of data) {
+        showMessage(message);
+      }
+
+      status.textContent = "Connected";
+    }
+
+    async function sendMessage() {
+      const text =
+        messageInput.value.trim();
+
+      if (!text) {
+        return;
+      }
+
+      sendButton.disabled = true;
+
+      const { data, error } = await supabase
+        .from("messages")
+        .insert({
+          room: room,
+          nickname: nickname,
+          message: text
+        })
+        .select()
+        .single();
+
+      sendButton.disabled = false;
+
+      if (error) {
+        console.error(error);
+        status.textContent =
+          "Message failed to send.";
+        return;
+      }
+
+      messageInput.value = "";
+
+      showMessage(data);
+
+      status.textContent = "Connected";
+
+      messageInput.focus();
+    }
+
+    sendButton.addEventListener(
+      "click",
+      sendMessage
+    );
+
+    messageInput.addEventListener(
+      "keydown",
+      event => {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      }
+    );
+
+    supabase
+      .channel("room-" + room)
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "messages",
+          filter: "room=eq." + room
+        },
+        payload => {
+          showMessage(payload.new);
+        }
+      )
+      .subscribe();
+
+    loadMessages();
+  </script>
+
+</body>
+</html>
