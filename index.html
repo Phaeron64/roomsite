@@ -2,301 +2,235 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Chat Rooms</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-}
-
 body {
-  margin: 0;
-  background: #008080;
-  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
-  font-size: 13px;
-  overflow: hidden;
+    margin: 0;
+    background: #ffffff;
+    color: #000000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
 }
 
-.window {
-  width: 390px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  background: #c0c0c0;
-
-  border-top: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
-  border-right: 2px solid #000000;
-  border-bottom: 2px solid #000000;
-
-  box-shadow:
-    1px 1px 0 #808080,
-    -1px -1px 0 #dfdfdf;
+a {
+    color: #0000cc;
 }
 
-.titlebar {
-  height: 26px;
-  margin: 2px;
-  padding: 4px 6px;
-
-  background: #000080;
-  color: white;
-  font-weight: bold;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.page {
+    width: 640px;
+    max-width: calc(100% - 20px);
+    margin: 25px auto;
 }
 
-.title-buttons {
-  display: flex;
-  gap: 2px;
+.header {
+    background: #000080;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 6px 8px;
 }
 
-.title-button {
-  width: 18px;
-  height: 18px;
-  padding: 0;
-
-  background: #c0c0c0;
-  color: black;
-
-  border-top: 2px solid white;
-  border-left: 2px solid white;
-  border-right: 2px solid #000;
-  border-bottom: 2px solid #000;
-
-  font-family: Arial;
-  font-size: 11px;
-  line-height: 12px;
+.subheader {
+    background: #c0c0c0;
+    border: 1px solid #808080;
+    padding: 4px 8px;
+    font-size: 11px;
 }
 
 .content {
-  padding: 18px;
-}
-
-.logo {
-  text-align: center;
-  font-size: 36px;
-  margin-bottom: 8px;
+    margin-top: 16px;
+    border: 1px solid #808080;
+    padding: 16px;
 }
 
 h1 {
-  font-size: 16px;
-  margin: 0 0 8px;
-  text-align: center;
+    font-size: 18px;
+    margin-top: 0;
 }
 
-.description {
-  text-align: center;
-  margin-bottom: 18px;
+hr {
+    border: 0;
+    border-top: 1px solid #808080;
 }
 
-fieldset {
-  border: 2px groove #fff;
-  margin: 0 0 14px;
-  padding: 12px;
+table {
+    width: 100%;
 }
 
-legend {
-  padding: 0 5px;
-}
-
-label {
-  display: block;
-  margin-bottom: 4px;
+td {
+    padding: 5px;
 }
 
 input {
-  width: 100%;
-  height: 26px;
-  margin-bottom: 12px;
-  padding: 3px 5px;
-
-  background: white;
-  color: black;
-
-  border-top: 2px solid #808080;
-  border-left: 2px solid #808080;
-  border-right: 2px solid white;
-  border-bottom: 2px solid white;
-
-  font-family: Tahoma, sans-serif;
-  font-size: 13px;
-  outline: none;
-}
-
-.button-row {
-  display: flex;
-  justify-content: center;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    padding: 3px;
+    border: 2px inset #dddddd;
 }
 
 button {
-  min-width: 95px;
-  height: 28px;
-  padding: 2px 12px;
-
-  background: #c0c0c0;
-
-  border-top: 2px solid white;
-  border-left: 2px solid white;
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
-
-  font-family: Tahoma, sans-serif;
-  font-size: 13px;
-  cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    padding: 3px 18px;
 }
 
-button:active {
-  border-top: 2px solid black;
-  border-left: 2px solid black;
-  border-right: 2px solid white;
-  border-bottom: 2px solid white;
-  padding-top: 4px;
-  padding-left: 14px;
+#error {
+    display: none;
+    color: #cc0000;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
-.error {
-  display: none;
-  margin-top: 12px;
-  color: #800000;
-  text-align: center;
-}
-
-.statusbar {
-  margin: 2px;
-  padding: 4px 6px;
-
-  border-top: 2px solid #808080;
-  border-left: 2px solid #808080;
-  border-right: 2px solid white;
-  border-bottom: 2px solid white;
-
-  font-size: 11px;
+.footer {
+    margin-top: 18px;
+    font-size: 10px;
+    color: #666666;
+    text-align: center;
 }
 </style>
 </head>
 
 <body>
 
-<div class="window">
+<div class="page">
 
-  <div class="titlebar">
-    <span>Chat Rooms</span>
-
-    <div class="title-buttons">
-      <button class="title-button">_</button>
-      <button class="title-button">□</button>
-      <button class="title-button">×</button>
-    </div>
-  </div>
-
-  <div class="content">
-
-    <div class="logo">☏</div>
-
-    <h1>Welcome to Chat Rooms</h1>
-
-    <div class="description">
-      Enter a room number to begin chatting.
+    <div class="header">
+        Chat Rooms
     </div>
 
-    <fieldset>
-      <legend>Join Room</legend>
-
-      <label for="nickname">Nickname:</label>
-      <input
-        id="nickname"
-        type="text"
-        maxlength="24"
-        autocomplete="off"
-      >
-
-      <label for="room">Room number:</label>
-      <input
-        id="room"
-        type="number"
-        min="0"
-        max="1000000"
-        autocomplete="off"
-      >
-    </fieldset>
-
-    <div class="button-row">
-      <button id="joinButton">Join</button>
+    <div class="subheader">
+        Simple temporary chat rooms
     </div>
 
-    <div id="error" class="error">
-      Please enter a nickname and a room from 0 to 1000000.
+    <div class="content">
+
+        <h1>Join a Chat Room</h1>
+
+        <p>
+            Enter your nickname and a room number between
+            0 and 1000000.
+        </p>
+
+        <hr>
+
+        <table>
+            <tr>
+                <td width="120">Nickname:</td>
+                <td>
+                    <input id="nickname" maxlength="24">
+                </td>
+            </tr>
+
+            <tr>
+                <td>Room number:</td>
+                <td>
+                    <input
+                        id="room"
+                        type="number"
+                        min="0"
+                        max="1000000"
+                    >
+                </td>
+            </tr>
+        </table>
+
+        <br>
+
+        <button id="joinButton">
+            Join Room
+        </button>
+
+        <div id="error">
+            Please enter a valid nickname and room number.
+        </div>
+
     </div>
 
-  </div>
-
-  <div class="statusbar">
-    Ready
-  </div>
+    <div class="footer">
+        Messages are temporary.
+    </div>
 
 </div>
 
+
 <script>
-const nicknameInput = document.getElementById("nickname");
-const roomInput = document.getElementById("room");
-const joinButton = document.getElementById("joinButton");
-const error = document.getElementById("error");
+const nicknameInput =
+    document.getElementById("nickname");
 
-const oldNickname = localStorage.getItem("nickname");
+const roomInput =
+    document.getElementById("room");
 
-if (oldNickname) {
-  nicknameInput.value = oldNickname;
+const joinButton =
+    document.getElementById("joinButton");
+
+const error =
+    document.getElementById("error");
+
+
+const savedNickname =
+    localStorage.getItem("nickname");
+
+if (savedNickname) {
+    nicknameInput.value = savedNickname;
 }
+
 
 function joinRoom() {
 
-  const nickname = nicknameInput.value.trim();
-  const roomText = roomInput.value.trim();
-  const room = Number(roomText);
+    const nickname =
+        nicknameInput.value.trim();
 
-  if (
-    !nickname ||
-    roomText === "" ||
-    !Number.isInteger(room) ||
-    room < 0 ||
-    room > 1000000
-  ) {
-    error.style.display = "block";
-    return;
-  }
+    const roomText =
+        roomInput.value.trim();
 
-  error.style.display = "none";
+    const room =
+        Number(roomText);
 
-  localStorage.setItem("nickname", nickname);
 
-  window.location.href =
-    "room.html?room=" + encodeURIComponent(room);
+    if (
+        nickname === "" ||
+        roomText === "" ||
+        !Number.isInteger(room) ||
+        room < 0 ||
+        room > 1000000
+    ) {
+        error.style.display = "block";
+        return;
+    }
+
+
+    localStorage.setItem(
+        "nickname",
+        nickname
+    );
+
+
+    window.location.href =
+        "room.html?room=" +
+        encodeURIComponent(room);
 }
 
-joinButton.addEventListener("click", joinRoom);
 
-roomInput.addEventListener("keydown", event => {
-  if (event.key === "Enter") {
-    joinRoom();
-  }
-});
+joinButton.addEventListener(
+    "click",
+    joinRoom
+);
 
-nicknameInput.addEventListener("keydown", event => {
-  if (event.key === "Enter") {
-    roomInput.focus();
-  }
-});
+
+roomInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+            joinRoom();
+        }
+
+    }
+);
 </script>
 
 </body>
