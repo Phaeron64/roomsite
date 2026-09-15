@@ -1,1 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rooms</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .box {
+      width: 360px;
+      padding: 30px;
+      background: #1b1b1b;
+      border: 1px solid #333;
+      border-radius: 12px;
+    }
+
+    h1 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #111;
+      color: white;
+      border: 1px solid #444;
+      border-radius: 7px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #888;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: white;
+      color: black;
+      border: none;
+      border-radius: 7px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ddd;
+    }
+
+    .error {
+      color: #ff7777;
+      font-size: 13px;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h1>rooms</h1>
+
+    <input
+      id="nickname"
+      type="text"
+      placeholder="Nickname"
+      maxlength="24"
+    >
+
+    <input
+      id="room"
+      type="number"
+      placeholder="Room number"
+      min="0"
+      max="1000000"
+    >
+
+    <button onclick="joinRoom()">Join room</button>
+
+    <div class="error" id="error">
+      Enter a nickname and room number from 0 to 1000000.
+    </div>
+  </div>
+
+  <script>
+    function joinRoom() {
+      const nickname = document.getElementById("nickname").value.trim();
+      const room = Number(document.getElementById("room").value);
+      const error = document.getElementById("error");
+
+      if (
+        !nickname ||
+        !Number.isInteger(room) ||
+        room < 0 ||
+        room > 1000000
+      ) {
+        error.style.display = "block";
+        return;
+      }
+
+      localStorage.setItem("nickname", nickname);
+
+      window.location.href =
+        "room.html?room=" + encodeURIComponent(room);
+    }
+  </script>
+
+</body>
+</html>
