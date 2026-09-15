@@ -1,304 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Room</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat Rooms</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      height: 100vh;
-      background: #111;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-    }
+html, body {
+  width: 100%;
+  height: 100%;
+}
 
-    header {
-      padding: 15px 20px;
-      background: #181818;
-      border-bottom: 1px solid #333;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+body {
+  margin: 0;
+  background: #008080;
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 13px;
+  overflow: hidden;
+}
 
-    #roomName {
-      font-weight: bold;
-    }
+.window {
+  width: 390px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-    header a {
-      color: #aaa;
-      text-decoration: none;
-    }
+  background: #c0c0c0;
 
-    #messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-    }
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #000000;
+  border-bottom: 2px solid #000000;
 
-    .message {
-      margin-bottom: 16px;
-    }
+  box-shadow:
+    1px 1px 0 #808080,
+    -1px -1px 0 #dfdfdf;
+}
 
-    .name {
-      font-weight: bold;
-      margin-bottom: 4px;
-    }
+.titlebar {
+  height: 26px;
+  margin: 2px;
+  padding: 4px 6px;
 
-    .text {
-      color: #ddd;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
+  background: #000080;
+  color: white;
+  font-weight: bold;
 
-    .bottom {
-      padding: 12px;
-      background: #181818;
-      border-top: 1px solid #333;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    .inputRow {
-      display: flex;
-      gap: 8px;
-    }
+.title-buttons {
+  display: flex;
+  gap: 2px;
+}
 
-    #messageInput {
-      flex: 1;
-      padding: 12px;
-      background: #111;
-      color: white;
-      border: 1px solid #444;
-      border-radius: 7px;
-      font-size: 15px;
-      outline: none;
-    }
+.title-button {
+  width: 18px;
+  height: 18px;
+  padding: 0;
 
-    #messageInput:focus {
-      border-color: #777;
-    }
+  background: #c0c0c0;
+  color: black;
 
-    button {
-      padding: 0 18px;
-      border: 0;
-      border-radius: 7px;
-      background: white;
-      color: black;
-      cursor: pointer;
-      font-size: 15px;
-    }
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
 
-    #status {
-      margin-top: 8px;
-      color: #777;
-      font-size: 12px;
-    }
-  </style>
+  font-family: Arial;
+  font-size: 11px;
+  line-height: 12px;
+}
+
+.content {
+  padding: 18px;
+}
+
+.logo {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+h1 {
+  font-size: 16px;
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.description {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+fieldset {
+  border: 2px groove #fff;
+  margin: 0 0 14px;
+  padding: 12px;
+}
+
+legend {
+  padding: 0 5px;
+}
+
+label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+input {
+  width: 100%;
+  height: 26px;
+  margin-bottom: 12px;
+  padding: 3px 5px;
+
+  background: white;
+  color: black;
+
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+
+  font-family: Tahoma, sans-serif;
+  font-size: 13px;
+  outline: none;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  min-width: 95px;
+  height: 28px;
+  padding: 2px 12px;
+
+  background: #c0c0c0;
+
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+
+  font-family: Tahoma, sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+button:active {
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+  padding-top: 4px;
+  padding-left: 14px;
+}
+
+.error {
+  display: none;
+  margin-top: 12px;
+  color: #800000;
+  text-align: center;
+}
+
+.statusbar {
+  margin: 2px;
+  padding: 4px 6px;
+
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+
+  font-size: 11px;
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div id="roomName">Room</div>
-    <a href="./">Leave</a>
-  </header>
+<div class="window">
 
-  <div id="messages"></div>
+  <div class="titlebar">
+    <span>Chat Rooms</span>
 
-  <div class="bottom">
-    <div class="inputRow">
+    <div class="title-buttons">
+      <button class="title-button">_</button>
+      <button class="title-button">□</button>
+      <button class="title-button">×</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="logo">☏</div>
+
+    <h1>Welcome to Chat Rooms</h1>
+
+    <div class="description">
+      Enter a room number to begin chatting.
+    </div>
+
+    <fieldset>
+      <legend>Join Room</legend>
+
+      <label for="nickname">Nickname:</label>
       <input
-        id="messageInput"
+        id="nickname"
         type="text"
-        maxlength="2000"
-        placeholder="Message"
+        maxlength="24"
         autocomplete="off"
       >
 
-      <button id="sendButton">
-        Send
-      </button>
+      <label for="room">Room number:</label>
+      <input
+        id="room"
+        type="number"
+        min="0"
+        max="1000000"
+        autocomplete="off"
+      >
+    </fieldset>
+
+    <div class="button-row">
+      <button id="joinButton">Join</button>
     </div>
 
-    <div id="status">Connecting...</div>
+    <div id="error" class="error">
+      Please enter a nickname and a room from 0 to 1000000.
+    </div>
+
   </div>
 
-  <script type="module">
-    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+  <div class="statusbar">
+    Ready
+  </div>
 
-    const SUPABASE_URL =
-      "https://jorkumfnpkjkkjvlwfmq.supabase.co";
+</div>
 
-    const SUPABASE_KEY =
-      "sb_publishable_90otUNYd51yG0oH20wdwxA_-9FeVxsi";
+<script>
+const nicknameInput = document.getElementById("nickname");
+const roomInput = document.getElementById("room");
+const joinButton = document.getElementById("joinButton");
+const error = document.getElementById("error");
 
-    const supabase = createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+const oldNickname = localStorage.getItem("nickname");
 
-    const params = new URLSearchParams(window.location.search);
-    const room = Number(params.get("room"));
+if (oldNickname) {
+  nicknameInput.value = oldNickname;
+}
 
-    const nickname =
-      localStorage.getItem("nickname") || "Guest";
+function joinRoom() {
 
-    const roomName =
-      document.getElementById("roomName");
+  const nickname = nicknameInput.value.trim();
+  const roomText = roomInput.value.trim();
+  const room = Number(roomText);
 
-    const messages =
-      document.getElementById("messages");
+  if (
+    !nickname ||
+    roomText === "" ||
+    !Number.isInteger(room) ||
+    room < 0 ||
+    room > 1000000
+  ) {
+    error.style.display = "block";
+    return;
+  }
 
-    const messageInput =
-      document.getElementById("messageInput");
+  error.style.display = "none";
 
-    const sendButton =
-      document.getElementById("sendButton");
+  localStorage.setItem("nickname", nickname);
 
-    const status =
-      document.getElementById("status");
+  window.location.href =
+    "room.html?room=" + encodeURIComponent(room);
+}
 
-    const seenMessages = new Set();
+joinButton.addEventListener("click", joinRoom);
 
-    if (
-      !Number.isInteger(room) ||
-      room < 0 ||
-      room > 1000000
-    ) {
-      window.location.href = "./";
-    }
+roomInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    joinRoom();
+  }
+});
 
-    roomName.textContent = "Room " + room;
-
-    function showMessage(data) {
-      if (seenMessages.has(data.id)) {
-        return;
-      }
-
-      seenMessages.add(data.id);
-
-      const message = document.createElement("div");
-      message.className = "message";
-
-      const name = document.createElement("div");
-      name.className = "name";
-      name.textContent = data.nickname || "Guest";
-
-      const text = document.createElement("div");
-      text.className = "text";
-      text.textContent = data.message || "";
-
-      message.appendChild(name);
-      message.appendChild(text);
-
-      messages.appendChild(message);
-
-      messages.scrollTop =
-        messages.scrollHeight;
-    }
-
-    async function loadMessages() {
-      status.textContent = "Loading messages...";
-
-      const { data, error } = await supabase
-        .from("messages")
-        .select("*")
-        .eq("room", room)
-        .order("created_at", {
-          ascending: true
-        });
-
-      if (error) {
-        console.error(error);
-        status.textContent =
-          "Could not load messages.";
-        return;
-      }
-
-      for (const message of data) {
-        showMessage(message);
-      }
-
-      status.textContent = "Connected";
-    }
-
-    async function sendMessage() {
-      const text =
-        messageInput.value.trim();
-
-      if (!text) {
-        return;
-      }
-
-      sendButton.disabled = true;
-
-      const { data, error } = await supabase
-        .from("messages")
-        .insert({
-          room: room,
-          nickname: nickname,
-          message: text
-        })
-        .select()
-        .single();
-
-      sendButton.disabled = false;
-
-      if (error) {
-        console.error(error);
-        status.textContent =
-          "Message failed to send.";
-        return;
-      }
-
-      messageInput.value = "";
-
-      showMessage(data);
-
-      status.textContent = "Connected";
-
-      messageInput.focus();
-    }
-
-    sendButton.addEventListener(
-      "click",
-      sendMessage
-    );
-
-    messageInput.addEventListener(
-      "keydown",
-      event => {
-        if (event.key === "Enter") {
-          sendMessage();
-        }
-      }
-    );
-
-    supabase
-      .channel("room-" + room)
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "messages",
-          filter: "room=eq." + room
-        },
-        payload => {
-          showMessage(payload.new);
-        }
-      )
-      .subscribe();
-
-    loadMessages();
-  </script>
+nicknameInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    roomInput.focus();
+  }
+});
+</script>
 
 </body>
 </html>
