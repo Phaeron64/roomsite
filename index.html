@@ -2,418 +2,627 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chat Rooms</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Chat Rooms Online</title>
 
 <style>
 :root {
-    --page: #e7eef8;
-    --panel: #ffffff;
-    --panel2: #edf4ff;
-    --text: #111;
-    --muted: #555;
+    --desktop: #3a6ea5;
 
-    --blue1: #3d95ff;
-    --blue2: #0b54b5;
-    --blue3: #003c9d;
+    --chrome: #ece9d8;
+    --chrome-light: #f7f5ed;
+    --chrome-border: #aca899;
 
-    --border: #7f9db9;
+    --text: #000000;
+    --muted: #666666;
+
+    --main: #ffffff;
+
+    --task-bg-top: #7ba2e7;
+    --task-bg-bottom: #6375d6;
+
+    --task-box: #d6dff7;
+    --task-header: #ffffff;
+    --task-header-text: #215dc6;
+
+    --link: #215dc6;
+
     --input: #ffffff;
-
-    --green1: #8ed53f;
-    --green2: #4a9d16;
-
-    --link: #0645ad;
 }
 
 body.dark {
-    --page: #15191f;
-    --panel: #242a32;
-    --panel2: #1d232b;
+    --desktop: #172238;
+
+    --chrome: #353535;
+    --chrome-light: #444444;
+    --chrome-border: #161616;
+
     --text: #eeeeee;
     --muted: #aaaaaa;
 
-    --blue1: #315f99;
-    --blue2: #193d70;
-    --blue3: #102849;
+    --main: #202020;
 
-    --border: #566578;
-    --input: #171b21;
+    --task-bg-top: #344d7c;
+    --task-bg-bottom: #26355e;
 
-    --green1: #5a8d34;
-    --green2: #315a1b;
+    --task-box: #2d3853;
+    --task-header: #3b4352;
+    --task-header-text: #a8c8ff;
 
-    --link: #86b7ff;
+    --link: #9ec5ff;
+
+    --input: #181818;
 }
 
 * {
     box-sizing: border-box;
 }
 
+html,
+body {
+    min-height: 100%;
+}
+
 body {
     margin: 0;
-    background: var(--page);
+    padding: 20px 0;
+
+    background: var(--desktop);
+
     color: var(--text);
-    font-family: Tahoma, Arial, sans-serif;
-    font-size: 13px;
+
+    font-family: Tahoma, Verdana, Arial, sans-serif;
+    font-size: 11px;
 }
 
 a {
     color: var(--link);
 }
 
-.site {
-    width: 760px;
+.page {
+    width: 780px;
     max-width: calc(100% - 20px);
-    margin: 25px auto;
+
+    margin: 0 auto;
+
+    background: var(--chrome);
+
+    border: 1px solid #163c74;
+
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, .35);
 }
 
-.header {
-    border: 1px solid #164989;
-    border-radius: 8px 8px 0 0;
-    overflow: hidden;
-}
 
-.header-top {
-    padding: 12px 16px;
+/* top */
 
-    background:
-        linear-gradient(
-            to bottom,
-            var(--blue1),
-            var(--blue2) 55%,
-            var(--blue3)
-        );
+.site-title {
+    height: 30px;
 
-    color: white;
-}
-
-.title {
-    font-size: 25px;
-    font-weight: bold;
-    text-shadow: 1px 1px #003377;
-}
-
-.subtitle {
-    margin-top: 3px;
-    font-size: 11px;
-}
-
-.nav {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-
-    padding: 4px 6px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #f8fbff,
-            #d9e7f7
-        );
-
-    border-top: 1px solid white;
-}
-
-body.dark .nav {
-    background: #252d37;
-}
-
-.nav a {
-    padding: 4px 10px;
-    color: var(--text);
-    text-decoration: none;
-}
-
-.nav a:hover {
-    background: #d7e8ff;
-    color: #003c9d;
-}
-
-body.dark .nav a:hover {
-    background: #37465b;
-    color: white;
-}
-
-.spacer {
-    flex: 1;
-}
-
-button {
-    font-family: Tahoma, Arial, sans-serif;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.theme-button {
-    padding: 3px 9px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #ffffff,
-            #d9e6f4
-        );
-
-    color: #111;
-
-    border: 1px solid #7f9db9;
-    border-radius: 3px;
-}
-
-.main {
-    margin-top: 14px;
-
-    background: var(--panel);
-
-    border: 1px solid #9eafd0;
-    border-radius: 6px;
-
-    overflow: hidden;
-}
-
-.section-title {
-    padding: 7px 10px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #6aa9ff,
-            #316ac5
-        );
+    padding: 5px 8px;
 
     color: white;
 
     font-size: 14px;
     font-weight: bold;
 
-    text-shadow: 1px 1px #184b91;
+    background:
+        linear-gradient(
+            to right,
+            #0a5ad7 0%,
+            #3b8cf0 55%,
+            #0a5ad7 100%
+        );
+
+    text-shadow: 1px 1px #003399;
 }
 
-.content {
-    padding: 18px;
+.menu {
+    height: 24px;
+
+    padding: 4px 7px;
+
+    background: var(--chrome);
+
+    border-bottom: 1px solid var(--chrome-border);
 }
 
-.welcome {
-    font-size: 18px;
-    font-weight: bold;
-    color: #245ca5;
+.menu a {
+    margin-right: 18px;
+
+    color: var(--text);
+    text-decoration: none;
 }
 
-body.dark .welcome {
-    color: #8ebeff;
+.menu a:hover {
+    text-decoration: underline;
 }
 
-.intro {
-    margin: 5px 0 18px;
-    color: var(--muted);
-}
-
-.join-box {
-    background: var(--panel2);
-
-    border: 1px solid #adc3de;
-    border-radius: 5px;
-
-    padding: 16px;
-}
-
-.row {
+.toolbar {
     display: flex;
     align-items: center;
-    margin-bottom: 12px;
+
+    height: 38px;
+
+    padding: 5px 7px;
+
+    background: var(--chrome-light);
+
+    border-top: 1px solid white;
+    border-bottom: 1px solid var(--chrome-border);
 }
 
-.row label {
-    width: 125px;
+.toolbar-link {
+    padding: 4px 9px;
+    margin-right: 3px;
+
+    color: var(--text);
+    text-decoration: none;
+
+    border: 1px solid transparent;
+}
+
+.toolbar-link:hover {
+    background: var(--chrome);
+    border-color: var(--chrome-border);
+}
+
+.toolbar-space {
+    flex: 1;
+}
+
+
+/* body */
+
+.layout {
+    display: grid;
+
+    grid-template-columns: 190px 1fr;
+
+    min-height: 460px;
+}
+
+
+/* XP task pane */
+
+.sidebar {
+    padding: 10px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--task-bg-top),
+            var(--task-bg-bottom)
+        );
+}
+
+.task-box {
+    margin-bottom: 10px;
+
+    background: var(--task-box);
+
+    border-radius: 5px 5px 3px 3px;
+
+    overflow: hidden;
+}
+
+.task-title {
+    padding: 6px 8px;
+
+    background:
+        linear-gradient(
+            to right,
+            var(--task-header),
+            var(--task-box)
+        );
+
+    color: var(--task-header-text);
+
     font-weight: bold;
+
+    border-radius: 5px 5px 0 0;
+}
+
+.task-content {
+    padding: 8px 9px 9px;
+}
+
+.task-content a {
+    display: block;
+
+    margin: 5px 0;
+
+    text-decoration: none;
+}
+
+.task-content a:hover {
+    text-decoration: underline;
+}
+
+
+/* main webpage */
+
+.content {
+    padding: 22px 24px;
+
+    background: var(--main);
+}
+
+h1 {
+    margin: 0 0 6px;
+
+    color: #316ac5;
+
+    font-size: 21px;
+    font-weight: normal;
+}
+
+body.dark h1 {
+    color: #9ac1ff;
+}
+
+.lead {
+    margin-bottom: 20px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.rule {
+    height: 1px;
+
+    margin: 15px 0;
+
+    background: #d6d3ce;
+}
+
+
+/* old Windows form */
+
+.groupbox {
+    position: relative;
+
+    margin-top: 20px;
+    padding: 18px 14px 14px;
+
+    border: 1px solid var(--chrome-border);
+}
+
+.group-title {
+    position: absolute;
+
+    top: -8px;
+    left: 8px;
+
+    padding: 0 5px;
+
+    background: var(--main);
+
+    font-weight: bold;
+}
+
+.form-row {
+    display: grid;
+
+    grid-template-columns: 115px 1fr;
+
+    align-items: center;
+
+    margin-bottom: 11px;
 }
 
 input {
-    flex: 1;
+    height: 23px;
 
-    height: 27px;
+    padding: 2px 4px;
 
     background: var(--input);
     color: var(--text);
 
-    border: 1px solid var(--border);
-
-    padding: 4px 6px;
+    border:
+        1px solid
+        #7f9db9;
 
     font-family: Tahoma, Arial, sans-serif;
-    font-size: 13px;
+    font-size: 11px;
 }
 
 input:focus {
     outline: 1px solid #316ac5;
 }
 
-.join-button {
-    min-width: 100px;
 
-    padding: 5px 16px;
+/* XP buttons */
+
+button {
+    min-width: 82px;
+    height: 25px;
+
+    padding: 2px 12px;
+
+    color: #000;
+
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 11px;
 
     background:
         linear-gradient(
             to bottom,
-            var(--green1),
-            var(--green2)
+            #ffffff,
+            #ece9d8 55%,
+            #d8d4c8
         );
 
-    border: 1px solid #32740e;
-    border-radius: 4px;
+    border: 1px solid #003c74;
+    border-radius: 3px;
 
-    color: white;
-    font-weight: bold;
-
-    text-shadow: 1px 1px #376d17;
+    cursor: pointer;
 }
 
-.join-button:hover {
-    filter: brightness(1.08);
+button:hover {
+    border-color: #e59700;
 }
+
+button:active {
+    background: #dad7ca;
+}
+
+.theme-button {
+    min-width: 75px;
+}
+
+
+/* misc */
 
 #error {
     display: none;
 
-    color: #cc0000;
-    font-weight: bold;
+    margin-top: 10px;
 
-    margin-top: 12px;
+    color: #cc0000;
+
+    font-weight: bold;
 }
 
 body.dark #error {
-    color: #ff7777;
+    color: #ff8080;
 }
 
-.status {
-    margin-top: 14px;
+.tip {
+    margin-top: 22px;
 
-    border: 1px solid #b3c6dc;
-    border-radius: 3px;
+    padding: 9px;
 
-    padding: 5px 7px;
+    background: var(--chrome-light);
 
-    background: var(--panel2);
+    border: 1px solid var(--chrome-border);
+}
 
-    font-size: 11px;
-    color: var(--muted);
+.statusbar {
+    display: flex;
+
+    height: 23px;
+
+    padding: 2px;
+
+    background: var(--chrome);
+}
+
+.status-part {
+    padding: 3px 6px;
+
+    border-top: 1px solid #aca899;
+    border-left: 1px solid #aca899;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
+}
+
+.status-main {
+    flex: 1;
 }
 
 .footer {
-    margin-top: 10px;
+    margin-top: 8px;
 
     text-align: center;
+
+    color: #dddddd;
+
     font-size: 10px;
-    color: var(--muted);
 }
 </style>
 </head>
 
 <body>
 
-<div class="site">
+<div class="page">
 
-    <div class="header">
+    <div class="site-title">
+        Chat Rooms Online
+    </div>
 
-        <div class="header-top">
-            <div class="title">Chat Rooms</div>
-            <div class="subtitle">
-                Simple temporary chat rooms
-            </div>
-        </div>
+    <div class="menu">
+        <a href="./">File</a>
+        <a href="./">Edit</a>
+        <a href="./">View</a>
+        <a href="javascript:void(0)">Favorites</a>
+        <a href="javascript:void(0)">Help</a>
+    </div>
 
-        <div class="nav">
-            <a href="./">Home</a>
-            <a href="./">Rooms</a>
-            <a href="javascript:void(0)">Help</a>
+    <div class="toolbar">
 
-            <div class="spacer"></div>
+        <a class="toolbar-link" href="./">
+            Back
+        </a>
 
-            <button
-                class="theme-button"
-                id="themeButton"
-            >
-                Dark Mode
-            </button>
-        </div>
+        <a class="toolbar-link" href="./">
+            Home
+        </a>
+
+        <a class="toolbar-link" href="javascript:void(0)">
+            Search
+        </a>
+
+        <div class="toolbar-space"></div>
+
+        <button
+            id="themeButton"
+            class="theme-button"
+        >
+            Dark
+        </button>
 
     </div>
 
 
-    <div class="main">
+    <div class="layout">
 
-        <div class="section-title">
-            Join a Chat Room
-        </div>
+        <aside class="sidebar">
 
-        <div class="content">
+            <div class="task-box">
 
-            <div class="welcome">
-                Welcome!
+                <div class="task-title">
+                    Chat Tasks
+                </div>
+
+                <div class="task-content">
+                    <a href="#join">Join a room</a>
+                    <a href="javascript:void(0)">Help</a>
+                </div>
+
             </div>
 
-            <div class="intro">
-                Choose a nickname and enter any room number
-                from 0 to 1000000.
+
+            <div class="task-box">
+
+                <div class="task-title">
+                    Other Places
+                </div>
+
+                <div class="task-content">
+                    <a href="./">Home</a>
+                    <a href="javascript:void(0)">About Chat Rooms</a>
+                </div>
+
             </div>
 
 
-            <div class="join-box">
+            <div class="task-box">
 
-                <div class="row">
-                    <label>Nickname:</label>
+                <div class="task-title">
+                    Details
+                </div>
+
+                <div class="task-content">
+                    Room numbers:<br>
+                    <b>0 - 1000000</b>
+                    <br><br>
+                    No account required.
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <main class="content">
+
+            <h1>Welcome to Chat Rooms</h1>
+
+            <div class="lead">
+                A simple place to talk and share stuff with your friends.
+            </div>
+
+            <div class="rule"></div>
+
+            <p>
+                To get started, enter a nickname and choose a room number.
+                Anyone using the same number will enter the same room.
+            </p>
+
+
+            <div
+                class="groupbox"
+                id="join"
+            >
+
+                <div class="group-title">
+                    Join a Chat Room
+                </div>
+
+
+                <div class="form-row">
+
+                    <label for="nickname">
+                        Nickname:
+                    </label>
 
                     <input
                         id="nickname"
                         maxlength="24"
                         autocomplete="off"
                     >
+
                 </div>
 
 
-                <div class="row">
-                    <label>Room number:</label>
+                <div class="form-row">
+
+                    <label for="room">
+                        Room number:
+                    </label>
 
                     <input
                         id="room"
                         type="number"
                         min="0"
                         max="1000000"
+                        autocomplete="off"
                     >
+
                 </div>
 
 
-                <button
-                    id="joinButton"
-                    class="join-button"
-                >
-                    Join Room
+                <button id="joinButton">
+                    Join
                 </button>
 
 
                 <div id="error">
-                    Please enter a nickname and valid room number.
+                    Please enter a nickname and a valid room number.
                 </div>
 
             </div>
 
 
-            <div class="status">
-                Status: Ready
+            <div class="tip">
+                <b>Tip:</b>
+                Give your friends the same room number to meet them there.
             </div>
 
+        </main>
+
+    </div>
+
+
+    <div class="statusbar">
+
+        <div class="status-part status-main">
+            Done
+        </div>
+
+        <div class="status-part">
+            Internet
         </div>
 
     </div>
 
+</div>
 
-    <div class="footer">
-        Chat Rooms · Temporary messages
-    </div>
 
+<div class="footer">
+    Chat Rooms Online · Best viewed at 800 × 600 or higher
 </div>
 
 
@@ -434,24 +643,26 @@ const themeButton =
     document.getElementById("themeButton");
 
 
-if (
-    localStorage.getItem("theme") === "dark"
-) {
+const savedTheme =
+    localStorage.getItem("theme");
+
+
+if (savedTheme === "dark") {
     document.body.classList.add("dark");
 }
 
 
-function updateTheme() {
+function updateThemeButton() {
 
     themeButton.textContent =
         document.body.classList.contains("dark")
-        ? "Light Mode"
-        : "Dark Mode";
+        ? "Light"
+        : "Dark";
 
 }
 
 
-updateTheme();
+updateThemeButton();
 
 
 themeButton.onclick = function() {
@@ -465,7 +676,7 @@ themeButton.onclick = function() {
             : "light"
     );
 
-    updateTheme();
+    updateThemeButton();
 
 };
 
@@ -492,7 +703,7 @@ function joinRoom() {
 
 
     if (
-        nickname === "" ||
+        !nickname ||
         roomText === "" ||
         !Number.isInteger(room) ||
         room < 0 ||
@@ -504,6 +715,7 @@ function joinRoom() {
 
 
     error.style.display = "none";
+
 
     localStorage.setItem(
         "nickname",
