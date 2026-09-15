@@ -2,236 +2,339 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Chat Room</title>
 
 <style>
 :root {
-    --page: #e7eef8;
-    --panel: #ffffff;
-    --panel2: #edf4ff;
+    --desktop: #3a6ea5;
 
-    --text: #111;
-    --muted: #555;
+    --chrome: #ece9d8;
+    --chrome-light: #f7f5ed;
+    --chrome-border: #aca899;
 
-    --blue1: #3d95ff;
-    --blue2: #0b54b5;
-    --blue3: #003c9d;
+    --main: #ffffff;
+    --text: #000000;
+    --muted: #666666;
 
-    --border: #7f9db9;
+    --task-top: #7ba2e7;
+    --task-bottom: #6375d6;
+
+    --task-box: #d6dff7;
+    --task-title: #ffffff;
+    --task-title-text: #215dc6;
 
     --chat: #ffffff;
     --input: #ffffff;
 
-    --link: #0645ad;
+    --link: #215dc6;
 }
 
 body.dark {
-    --page: #15191f;
-    --panel: #242a32;
-    --panel2: #1d232b;
+    --desktop: #172238;
 
+    --chrome: #353535;
+    --chrome-light: #444444;
+    --chrome-border: #161616;
+
+    --main: #202020;
     --text: #eeeeee;
     --muted: #aaaaaa;
 
-    --blue1: #315f99;
-    --blue2: #193d70;
-    --blue3: #102849;
+    --task-top: #344d7c;
+    --task-bottom: #26355e;
 
-    --border: #566578;
+    --task-box: #2d3853;
+    --task-title: #3b4352;
+    --task-title-text: #a8c8ff;
 
-    --chat: #171b21;
-    --input: #171b21;
+    --chat: #181818;
+    --input: #181818;
 
-    --link: #86b7ff;
+    --link: #9ec5ff;
 }
 
 * {
     box-sizing: border-box;
 }
 
+html,
+body {
+    min-height: 100%;
+}
+
 body {
     margin: 0;
+    padding: 15px 0;
 
-    background: var(--page);
-    color: var(--text);
-
-    font-family: Tahoma, Arial, sans-serif;
-    font-size: 13px;
-}
-
-.site {
-    width: 850px;
-    max-width: calc(100% - 20px);
-
-    margin: 18px auto;
-}
-
-.header {
-    border: 1px solid #164989;
-    border-radius: 8px 8px 0 0;
-
-    overflow: hidden;
-}
-
-.header-top {
-    padding: 10px 14px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            var(--blue1),
-            var(--blue2) 55%,
-            var(--blue3)
-        );
-
-    color: white;
-}
-
-.logo {
-    font-size: 21px;
-    font-weight: bold;
-
-    text-shadow: 1px 1px #003377;
-}
-
-.nav {
-    display: flex;
-    align-items: center;
-
-    padding: 4px 6px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #ffffff,
-            #dce9f7
-        );
-}
-
-body.dark .nav {
-    background: #252d37;
-}
-
-.nav a {
-    padding: 4px 9px;
+    background: var(--desktop);
 
     color: var(--text);
-    text-decoration: none;
+
+    font-family: Tahoma, Verdana, Arial, sans-serif;
+    font-size: 11px;
 }
 
-.nav a:hover {
-    background: #d5e7ff;
-    color: #003c9d;
+a {
+    color: var(--link);
 }
 
-body.dark .nav a:hover {
-    background: #37465b;
-    color: white;
+.page {
+    width: 820px;
+    max-width: calc(100% - 16px);
+
+    margin: 0 auto;
+
+    background: var(--chrome);
+
+    border: 1px solid #163c74;
+
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, .35);
 }
 
-.spacer {
-    flex: 1;
-}
 
-button {
-    font-family: Tahoma, Arial, sans-serif;
-    cursor: pointer;
-}
+/* XP header */
 
-.theme-button {
-    padding: 3px 9px;
+.site-title {
+    height: 30px;
 
-    background:
-        linear-gradient(
-            to bottom,
-            #ffffff,
-            #d9e6f4
-        );
-
-    color: #111;
-
-    border: 1px solid #7f9db9;
-    border-radius: 3px;
-}
-
-.main {
-    margin-top: 12px;
-
-    background: var(--panel);
-
-    border: 1px solid #9eafd0;
-    border-radius: 6px;
-
-    overflow: hidden;
-}
-
-.room-title {
-    padding: 7px 10px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #6aa9ff,
-            #316ac5
-        );
+    padding: 5px 8px;
 
     color: white;
 
     font-size: 14px;
     font-weight: bold;
 
-    text-shadow: 1px 1px #184b91;
+    background:
+        linear-gradient(
+            to right,
+            #0a5ad7,
+            #3b8cf0 55%,
+            #0a5ad7
+        );
+
+    text-shadow: 1px 1px #003399;
 }
 
-.room-info {
-    background: var(--panel2);
+.menu {
+    height: 24px;
 
-    padding: 7px 10px;
+    padding: 4px 7px;
 
-    border-bottom: 1px solid #adc3de;
+    background: var(--chrome);
+
+    border-bottom: 1px solid var(--chrome-border);
+}
+
+.menu a {
+    margin-right: 18px;
+
+    color: var(--text);
+    text-decoration: none;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+
+    height: 39px;
+
+    padding: 5px 7px;
+
+    background: var(--chrome-light);
+
+    border-bottom: 1px solid var(--chrome-border);
+}
+
+.toolbar a {
+    padding: 5px 10px;
+
+    color: var(--text);
+    text-decoration: none;
+
+    border: 1px solid transparent;
+}
+
+.toolbar a:hover {
+    background: var(--chrome);
+    border-color: var(--chrome-border);
+}
+
+.spacer {
+    flex: 1;
+}
+
+
+/* address bar */
+
+.address {
+    display: flex;
+    align-items: center;
+
+    padding: 3px 5px;
+
+    background: var(--chrome);
+}
+
+.address-label {
+    margin-right: 5px;
+}
+
+.address-value {
+    flex: 1;
+
+    height: 22px;
+
+    padding: 3px 5px;
+
+    background: var(--main);
+
+    border: 1px solid #7f9db9;
+
+    color: var(--text);
+}
+
+
+/* layout */
+
+.layout {
+    display: grid;
+
+    grid-template-columns: 190px 1fr;
+
+    min-height: 510px;
+}
+
+
+/* task pane */
+
+.sidebar {
+    padding: 10px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--task-top),
+            var(--task-bottom)
+        );
+}
+
+.task-box {
+    margin-bottom: 10px;
+
+    overflow: hidden;
+
+    background: var(--task-box);
+
+    border-radius: 5px 5px 3px 3px;
+}
+
+.task-title {
+    padding: 6px 8px;
+
+    color: var(--task-title-text);
+
+    background:
+        linear-gradient(
+            to right,
+            var(--task-title),
+            var(--task-box)
+        );
+
+    font-weight: bold;
+}
+
+.task-content {
+    padding: 8px 9px;
+}
+
+.task-content a {
+    display: block;
+
+    margin: 5px 0;
+
+    text-decoration: none;
+}
+
+.task-content a:hover {
+    text-decoration: underline;
+}
+
+
+/* room */
+
+.room {
+    padding: 14px;
+
+    background: var(--main);
+}
+
+.room-heading {
+    margin: 0;
+
+    color: #316ac5;
+
+    font-size: 20px;
+    font-weight: normal;
+}
+
+body.dark .room-heading {
+    color: #9ac1ff;
+}
+
+.room-description {
+    margin: 4px 0 13px;
 
     color: var(--muted);
-
-    font-size: 11px;
 }
 
+
+/* chat log */
+
 #messages {
-    height: 430px;
-
-    margin: 10px;
-
-    padding: 9px;
+    height: 380px;
 
     overflow-y: auto;
+
+    padding: 6px;
 
     background: var(--chat);
     color: var(--text);
 
-    border: 1px solid var(--border);
-
-    font-family: Tahoma, Arial, sans-serif;
+    border:
+        1px solid
+        #7f9db9;
 }
 
 .message {
-    padding: 6px 7px;
-    margin-bottom: 4px;
+    padding: 5px 6px 7px;
 
-    border-bottom: 1px solid #d7e0eb;
+    border-bottom:
+        1px solid
+        #e3e3e3;
 }
 
 body.dark .message {
-    border-bottom-color: #343b44;
+    border-bottom-color: #343434;
+}
+
+.message:last-child {
+    border-bottom: 0;
 }
 
 .name {
+    color: #215dc6;
+
     font-weight: bold;
-    color: #245ca5;
 }
 
 body.dark .name {
-    color: #86b7ff;
+    color: #9ec5ff;
 }
 
 .time {
@@ -239,101 +342,121 @@ body.dark .name {
 
     color: var(--muted);
 
-    font-size: 10px;
-    font-weight: normal;
+    font-size: 9px;
 }
 
 .text {
     margin-top: 2px;
-    margin-left: 10px;
+    margin-left: 9px;
 
     white-space: pre-wrap;
     word-break: break-word;
 }
 
-.send-panel {
-    margin: 10px;
 
-    background: var(--panel2);
+/* composer */
 
-    border: 1px solid #adc3de;
-    border-radius: 5px;
+.composer {
+    margin-top: 9px;
 
     padding: 8px;
+
+    background: var(--chrome);
+
+    border: 1px solid var(--chrome-border);
+}
+
+.composer-label {
+    margin-bottom: 4px;
 }
 
 .send-row {
     display: flex;
-    gap: 6px;
+    gap: 5px;
 }
 
 #messageInput {
     flex: 1;
 
-    height: 29px;
+    height: 25px;
+
+    padding: 3px 5px;
 
     background: var(--input);
     color: var(--text);
 
-    border: 1px solid var(--border);
-
-    padding: 4px 6px;
+    border: 1px solid #7f9db9;
 
     font-family: Tahoma, Arial, sans-serif;
+    font-size: 11px;
 }
 
-#sendButton {
-    width: 90px;
+
+/* XP buttons */
+
+button {
+    min-width: 76px;
+    height: 25px;
+
+    color: #000;
+
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 11px;
 
     background:
         linear-gradient(
             to bottom,
-            #8ed53f,
-            #4a9d16
+            white,
+            #ece9d8 55%,
+            #d8d4c8
         );
 
-    border: 1px solid #32740e;
-    border-radius: 4px;
+    border: 1px solid #003c74;
+    border-radius: 3px;
 
-    color: white;
-    font-weight: bold;
-
-    text-shadow: 1px 1px #376d17;
+    cursor: pointer;
 }
+
+button:hover {
+    border-color: #e59700;
+}
+
+button:disabled {
+    color: #888;
+}
+
+
+/* status */
 
 .statusbar {
     display: flex;
 
-    margin: 0 10px 10px;
+    height: 23px;
 
-    gap: 4px;
+    padding: 2px;
+
+    background: var(--chrome);
 }
 
-.status-section {
-    background: var(--panel2);
+.status-part {
+    padding: 3px 6px;
 
-    border: 1px solid #adc3de;
-
-    padding: 4px 7px;
-
-    color: var(--muted);
-
-    font-size: 10px;
+    border-top: 1px solid #aca899;
+    border-left: 1px solid #aca899;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
 }
 
 #status {
     flex: 1;
 }
 
-#username {
-    min-width: 170px;
-}
-
 .footer {
-    margin-top: 8px;
+    margin-top: 7px;
 
     text-align: center;
-    color: var(--muted);
+
+    color: #ddd;
 
     font-size: 10px;
 }
@@ -342,102 +465,197 @@ body.dark .name {
 
 <body>
 
-<div class="site">
+<div class="page">
 
-    <div class="header">
-
-        <div class="header-top">
-            <div class="logo">
-                Chat Rooms
-            </div>
-        </div>
-
-
-        <div class="nav">
-
-            <a href="./">Home</a>
-
-            <a href="./">
-                Leave Room
-            </a>
-
-            <div class="spacer"></div>
-
-            <button
-                class="theme-button"
-                id="themeButton"
-            >
-                Dark Mode
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <div class="main">
-
-        <div
-            id="roomName"
-            class="room-title"
-        >
-            Chat Room
-        </div>
-
-
-        <div class="room-info">
-            Messages in this room are temporary.
-        </div>
-
-
-        <div id="messages"></div>
-
-
-        <div class="send-panel">
-
-            <div class="send-row">
-
-                <input
-                    id="messageInput"
-                    maxlength="2000"
-                    autocomplete="off"
-                    placeholder="Type your message here..."
-                >
-
-                <button id="sendButton">
-                    Send
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="statusbar">
-
-            <div
-                class="status-section"
-                id="status"
-            >
-                Connecting...
-            </div>
-
-            <div
-                class="status-section"
-                id="username"
-            >
-                User
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="footer">
+    <div class="site-title" id="topTitle">
         Chat Rooms
     </div>
 
+
+    <div class="menu">
+        <a href="./">File</a>
+        <a href="./">Edit</a>
+        <a href="javascript:void(0)">View</a>
+        <a href="javascript:void(0)">Favorites</a>
+        <a href="javascript:void(0)">Tools</a>
+        <a href="javascript:void(0)">Help</a>
+    </div>
+
+
+    <div class="toolbar">
+
+        <a href="./">
+            Back
+        </a>
+
+        <a href="./">
+            Home
+        </a>
+
+        <a href="javascript:void(0)">
+            Search
+        </a>
+
+        <div class="spacer"></div>
+
+        <button id="themeButton">
+            Dark
+        </button>
+
+    </div>
+
+
+    <div class="address">
+
+        <span class="address-label">
+            Address
+        </span>
+
+        <div
+            class="address-value"
+            id="addressValue"
+        >
+            Chat Rooms
+        </div>
+
+    </div>
+
+
+    <div class="layout">
+
+        <aside class="sidebar">
+
+            <div class="task-box">
+
+                <div class="task-title">
+                    Chat Tasks
+                </div>
+
+                <div class="task-content">
+                    <a href="#messageInput">
+                        Send a message
+                    </a>
+
+                    <a href="./">
+                        Leave this room
+                    </a>
+                </div>
+
+            </div>
+
+
+            <div class="task-box">
+
+                <div class="task-title">
+                    Other Places
+                </div>
+
+                <div class="task-content">
+                    <a href="./">
+                        Chat Rooms Home
+                    </a>
+
+                    <a href="javascript:void(0)">
+                        Help and Support
+                    </a>
+                </div>
+
+            </div>
+
+
+            <div class="task-box">
+
+                <div class="task-title">
+                    Details
+                </div>
+
+                <div class="task-content">
+
+                    <b id="sidebarRoom">
+                        Room
+                    </b>
+
+                    <br><br>
+
+                    <span id="sidebarUser">
+                        User
+                    </span>
+
+                    <br><br>
+
+                    Messages are temporary.
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <main class="room">
+
+            <h1
+                class="room-heading"
+                id="roomName"
+            >
+                Chat Room
+            </h1>
+
+            <div class="room-description">
+                Messages sent by people currently using this room.
+            </div>
+
+
+            <div id="messages"></div>
+
+
+            <div class="composer">
+
+                <div class="composer-label">
+                    <b>Message:</b>
+                </div>
+
+                <div class="send-row">
+
+                    <input
+                        id="messageInput"
+                        maxlength="2000"
+                        autocomplete="off"
+                    >
+
+                    <button id="sendButton">
+                        Send
+                    </button>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <div class="statusbar">
+
+        <div
+            class="status-part"
+            id="status"
+        >
+            Connecting...
+        </div>
+
+        <div class="status-part">
+            Internet
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="footer">
+    Chat Rooms Online
 </div>
 
 
@@ -470,17 +688,17 @@ if (
 }
 
 
-function updateTheme() {
+function updateThemeButton() {
 
     themeButton.textContent =
         document.body.classList.contains("dark")
-        ? "Light Mode"
-        : "Dark Mode";
+            ? "Light"
+            : "Dark";
 
 }
 
 
-updateTheme();
+updateThemeButton();
 
 
 themeButton.onclick = function() {
@@ -494,7 +712,7 @@ themeButton.onclick = function() {
             : "light"
     );
 
-    updateTheme();
+    updateThemeButton();
 
 };
 
@@ -519,7 +737,9 @@ if (
     room < 0 ||
     room > 1000000
 ) {
+
     window.location.href = "./";
+
 }
 
 
@@ -544,13 +764,31 @@ const statusText =
 document.getElementById(
     "roomName"
 ).textContent =
-    "Chat Room #" + room;
+    "Room " + room;
 
 
 document.getElementById(
-    "username"
+    "topTitle"
 ).textContent =
-    "User: " + nickname;
+    "Chat Rooms - Room " + room;
+
+
+document.getElementById(
+    "addressValue"
+).textContent =
+    "Chat Rooms > Room " + room;
+
+
+document.getElementById(
+    "sidebarRoom"
+).textContent =
+    "Room " + room;
+
+
+document.getElementById(
+    "sidebarUser"
+).textContent =
+    "Nickname: " + nickname;
 
 
 const seen =
@@ -611,9 +849,7 @@ function displayMessage(data) {
             "time";
 
         time.textContent =
-            "[" +
-            formatTime(data.created_at) +
-            "]";
+            formatTime(data.created_at);
 
 
         message.appendChild(time);
@@ -680,12 +916,14 @@ async function loadMessages() {
 
 
     for (const message of data) {
+
         displayMessage(message);
+
     }
 
 
     statusText.textContent =
-        "Connected";
+        "Done";
 
 }
 
@@ -739,15 +977,14 @@ async function sendMessage() {
     }
 
 
-    messageInput.value =
-        "";
+    messageInput.value = "";
 
 
     displayMessage(data);
 
 
     statusText.textContent =
-        "Connected";
+        "Done";
 
 
     messageInput.focus();
@@ -802,11 +1039,11 @@ client
     .subscribe(
         function(state) {
 
-            if (
-                state === "SUBSCRIBED"
-            ) {
+            if (state === "SUBSCRIBED") {
+
                 statusText.textContent =
-                    "Connected";
+                    "Done";
+
             }
 
         }
