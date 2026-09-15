@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>rooms</title>
+  <title>Room</title>
 
   <style>
     * {
@@ -12,116 +12,292 @@
 
     body {
       margin: 0;
+      height: 100vh;
       background: #111;
       color: white;
       font-family: Arial, sans-serif;
-      height: 100vh;
       display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 15px 20px;
+      background: #181818;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
     }
 
-    .box {
-      width: 360px;
-      padding: 30px;
-      background: #1b1b1b;
-      border: 1px solid #333;
-      border-radius: 12px;
+    #roomName {
+      font-weight: bold;
     }
 
-    h1 {
-      margin-top: 0;
-      text-align: center;
+    header a {
+      color: #aaa;
+      text-decoration: none;
     }
 
-    input {
-      width: 100%;
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .message {
+      margin-bottom: 16px;
+    }
+
+    .name {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .text {
+      color: #ddd;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .bottom {
       padding: 12px;
-      margin-bottom: 10px;
+      background: #181818;
+      border-top: 1px solid #333;
+    }
+
+    .inputRow {
+      display: flex;
+      gap: 8px;
+    }
+
+    #messageInput {
+      flex: 1;
+      padding: 12px;
       background: #111;
       color: white;
       border: 1px solid #444;
       border-radius: 7px;
-      font-size: 16px;
+      font-size: 15px;
       outline: none;
     }
 
-    input:focus {
-      border-color: #888;
+    #messageInput:focus {
+      border-color: #777;
     }
 
     button {
-      width: 100%;
-      padding: 12px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 7px;
       background: white;
       color: black;
-      border: none;
-      border-radius: 7px;
-      font-size: 16px;
       cursor: pointer;
+      font-size: 15px;
     }
 
-    button:hover {
-      background: #ddd;
-    }
-
-    .error {
-      color: #ff7777;
-      font-size: 13px;
-      margin-top: 10px;
-      display: none;
+    #status {
+      margin-top: 8px;
+      color: #777;
+      font-size: 12px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="box">
-    <h1>rooms</h1>
+  <header>
+    <div id="roomName">Room</div>
+    <a href="./">Leave</a>
+  </header>
 
-    <input
-      id="nickname"
-      type="text"
-      placeholder="Nickname"
-      maxlength="24"
-    >
+  <div id="messages"></div>
 
-    <input
-      id="room"
-      type="number"
-      placeholder="Room number"
-      min="0"
-      max="1000000"
-    >
+  <div class="bottom">
+    <div class="inputRow">
+      <input
+        id="messageInput"
+        type="text"
+        maxlength="2000"
+        placeholder="Message"
+        autocomplete="off"
+      >
 
-    <button onclick="joinRoom()">Join room</button>
-
-    <div class="error" id="error">
-      Enter a nickname and room number from 0 to 1000000.
+      <button id="sendButton">
+        Send
+      </button>
     </div>
+
+    <div id="status">Connecting...</div>
   </div>
 
-  <script>
-    function joinRoom() {
-      const nickname = document.getElementById("nickname").value.trim();
-      const room = Number(document.getElementById("room").value);
-      const error = document.getElementById("error");
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-      if (
-        !nickname ||
-        !Number.isInteger(room) ||
-        room < 0 ||
-        room > 1000000
-      ) {
-        error.style.display = "block";
+    const SUPABASE_URL =
+      "https://jorkumfnpkjkkjvlwfmq.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_90otUNYd51yG0oH20wdwxA_-9FeVxsi";
+
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const params = new URLSearchParams(window.location.search);
+    const room = Number(params.get("room"));
+
+    const nickname =
+      localStorage.getItem("nickname") || "Guest";
+
+    const roomName =
+      document.getElementById("roomName");
+
+    const messages =
+      document.getElementById("messages");
+
+    const messageInput =
+      document.getElementById("messageInput");
+
+    const sendButton =
+      document.getElementById("sendButton");
+
+    const status =
+      document.getElementById("status");
+
+    const seenMessages = new Set();
+
+    if (
+      !Number.isInteger(room) ||
+      room < 0 ||
+      room > 1000000
+    ) {
+      window.location.href = "./";
+    }
+
+    roomName.textContent = "Room " + room;
+
+    function showMessage(data) {
+      if (seenMessages.has(data.id)) {
         return;
       }
 
-      localStorage.setItem("nickname", nickname);
+      seenMessages.add(data.id);
 
-      window.location.href =
-        "room.html?room=" + encodeURIComponent(room);
+      const message = document.createElement("div");
+      message.className = "message";
+
+      const name = document.createElement("div");
+      name.className = "name";
+      name.textContent = data.nickname || "Guest";
+
+      const text = document.createElement("div");
+      text.className = "text";
+      text.textContent = data.message || "";
+
+      message.appendChild(name);
+      message.appendChild(text);
+
+      messages.appendChild(message);
+
+      messages.scrollTop =
+        messages.scrollHeight;
     }
+
+    async function loadMessages() {
+      status.textContent = "Loading messages...";
+
+      const { data, error } = await supabase
+        .from("messages")
+        .select("*")
+        .eq("room", room)
+        .order("created_at", {
+          ascending: true
+        });
+
+      if (error) {
+        console.error(error);
+        status.textContent =
+          "Could not load messages.";
+        return;
+      }
+
+      for (const message of data) {
+        showMessage(message);
+      }
+
+      status.textContent = "Connected";
+    }
+
+    async function sendMessage() {
+      const text =
+        messageInput.value.trim();
+
+      if (!text) {
+        return;
+      }
+
+      sendButton.disabled = true;
+
+      const { data, error } = await supabase
+        .from("messages")
+        .insert({
+          room: room,
+          nickname: nickname,
+          message: text
+        })
+        .select()
+        .single();
+
+      sendButton.disabled = false;
+
+      if (error) {
+        console.error(error);
+        status.textContent =
+          "Message failed to send.";
+        return;
+      }
+
+      messageInput.value = "";
+
+      showMessage(data);
+
+      status.textContent = "Connected";
+
+      messageInput.focus();
+    }
+
+    sendButton.addEventListener(
+      "click",
+      sendMessage
+    );
+
+    messageInput.addEventListener(
+      "keydown",
+      event => {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      }
+    );
+
+    supabase
+      .channel("room-" + room)
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "messages",
+          filter: "room=eq." + room
+        },
+        payload => {
+          showMessage(payload.new);
+        }
+      )
+      .subscribe();
+
+    loadMessages();
   </script>
 
 </body>
