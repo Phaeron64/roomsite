@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Chat Rooms</title>
 
 <style>
@@ -14,44 +13,39 @@
     --light2: #dfdfdf;
     --dark: #808080;
     --black: #000000;
-
-    --window: #c0c0c0;
     --content: #ffffff;
     --text: #000000;
-
-    --title: #000080;
-    --title-text: #ffffff;
-
     --input: #ffffff;
-    --link: #0000ff;
+    --title: #000080;
+    --link: #0000ee;
 }
 
 body.dark {
-    --desktop: #1b1b1b;
+    --desktop: #181818;
     --face: #303030;
-    --light: #5b5b5b;
+    --light: #5a5a5a;
     --light2: #444444;
     --dark: #111111;
     --black: #000000;
-
-    --window: #303030;
     --content: #202020;
     --text: #eeeeee;
-
-    --title: #000060;
-    --title-text: #ffffff;
-
     --input: #151515;
-    --link: #8ea7ff;
+    --title: #000060;
+    --link: #9aadff;
 }
 
 * {
     box-sizing: border-box;
 }
 
+html,
+body {
+    min-height: 100%;
+}
+
 body {
     margin: 0;
-    padding: 24px 10px;
+    padding: 28px 10px;
 
     background: var(--desktop);
     color: var(--text);
@@ -67,10 +61,9 @@ a {
 .window {
     width: 720px;
     max-width: 100%;
-
     margin: auto;
 
-    background: var(--window);
+    background: var(--face);
 
     border-top: 2px solid var(--light);
     border-left: 2px solid var(--light);
@@ -81,66 +74,18 @@ a {
 }
 
 .titlebar {
-    height: 24px;
-
-    background: var(--title);
-    color: var(--title-text);
-
-    display: flex;
-    align-items: center;
-
-    padding: 3px 5px;
-
-    font-weight: bold;
-}
-
-.titlebar-text {
-    flex: 1;
-}
-
-.title-buttons {
-    display: flex;
-    gap: 2px;
-}
-
-.title-button {
-    width: 18px;
-    min-width: 18px;
-    height: 18px;
-
-    padding: 0;
-
-    font-size: 10px;
-}
-
-.menubar {
-    height: 25px;
-
-    display: flex;
-    align-items: center;
-
-    padding: 2px 5px;
-
-    border-bottom: 1px solid var(--dark);
-}
-
-.menubar a {
-    color: var(--text);
-    text-decoration: none;
-
-    padding: 4px 8px;
-}
-
-.menubar a:hover {
     background: var(--title);
     color: white;
+
+    font-weight: bold;
+
+    padding: 5px 7px;
 }
 
 .toolbar {
     display: flex;
     align-items: center;
-
-    min-height: 38px;
+    gap: 5px;
 
     padding: 5px;
 
@@ -148,113 +93,27 @@ a {
     border-bottom: 1px solid var(--dark);
 }
 
-.toolbar-text {
+.toolbar a {
+    color: var(--text);
+    text-decoration: none;
+
+    padding: 4px 8px;
+}
+
+.toolbar a:hover {
+    background: var(--title);
+    color: white;
+}
+
+.spacer {
     flex: 1;
 }
 
-.content {
-    margin: 6px;
-
-    background: var(--content);
-
-    border-top: 2px solid var(--dark);
-    border-left: 2px solid var(--dark);
-    border-right: 2px solid var(--light);
-    border-bottom: 2px solid var(--light);
-
-    padding: 18px;
-}
-
-.layout {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 18px;
-}
-
-.sidebar {
-    background: var(--face);
-
-    border-top: 2px solid var(--light);
-    border-left: 2px solid var(--light);
-    border-right: 2px solid var(--dark);
-    border-bottom: 2px solid var(--dark);
-
-    padding: 8px;
-
-    height: fit-content;
-}
-
-.sidebar-title {
-    background: var(--title);
-    color: white;
-
-    font-weight: bold;
-
-    padding: 3px 5px;
-
-    margin-bottom: 8px;
-}
-
-.sidebar a {
-    display: block;
-    margin: 6px 2px;
-}
-
-h1 {
-    margin: 0 0 7px;
-
-    font-size: 20px;
-}
-
-.description {
-    margin-bottom: 18px;
-}
-
-fieldset {
-    border: 2px groove var(--light);
-
-    padding: 12px;
-
-    margin: 0;
-}
-
-legend {
-    padding: 0 5px;
-}
-
-.row {
-    display: grid;
-
-    grid-template-columns: 100px 1fr;
-
-    align-items: center;
-
-    margin-bottom: 10px;
-}
-
-input {
-    width: 100%;
-    height: 24px;
-
-    background: var(--input);
-    color: var(--text);
-
-    border-top: 2px solid var(--dark);
-    border-left: 2px solid var(--dark);
-    border-right: 2px solid var(--light);
-    border-bottom: 2px solid var(--light);
-
-    padding: 2px 4px;
-
-    font-family: inherit;
-    font-size: 12px;
-
-    outline: none;
-}
-
 button {
-    min-width: 80px;
-    height: 25px;
+    min-width: 82px;
+    height: 26px;
+
+    padding: 2px 10px;
 
     background: var(--face);
     color: var(--text);
@@ -276,8 +135,115 @@ button:active {
     border-right: 2px solid var(--light);
     border-bottom: 2px solid var(--light);
 
-    padding-top: 3px;
-    padding-left: 5px;
+    padding-top: 4px;
+    padding-left: 12px;
+}
+
+.content {
+    margin: 6px;
+
+    padding: 16px;
+
+    background: var(--content);
+
+    border-top: 2px solid var(--dark);
+    border-left: 2px solid var(--dark);
+    border-right: 2px solid var(--light);
+    border-bottom: 2px solid var(--light);
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 165px 1fr;
+    gap: 18px;
+}
+
+.sidebar {
+    height: fit-content;
+
+    background: var(--face);
+
+    border-top: 2px solid var(--light);
+    border-left: 2px solid var(--light);
+    border-right: 2px solid var(--dark);
+    border-bottom: 2px solid var(--dark);
+
+    padding: 7px;
+}
+
+.sidebar-title {
+    margin-bottom: 7px;
+
+    padding: 4px 5px;
+
+    background: var(--title);
+    color: white;
+
+    font-weight: bold;
+}
+
+.sidebar a {
+    display: block;
+    margin: 6px 2px;
+}
+
+.sidebar hr {
+    border: 0;
+    border-top: 1px solid var(--dark);
+    border-bottom: 1px solid var(--light);
+
+    margin: 10px 0;
+}
+
+h1 {
+    margin: 0 0 7px;
+    font-size: 20px;
+}
+
+.description {
+    margin-bottom: 18px;
+    line-height: 1.4;
+}
+
+fieldset {
+    margin: 0;
+
+    border: 2px groove var(--light);
+
+    padding: 13px;
+}
+
+legend {
+    padding: 0 5px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 105px 1fr;
+
+    align-items: center;
+
+    margin-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    height: 25px;
+
+    padding: 2px 4px;
+
+    background: var(--input);
+    color: var(--text);
+
+    border-top: 2px solid var(--dark);
+    border-left: 2px solid var(--dark);
+    border-right: 2px solid var(--light);
+    border-bottom: 2px solid var(--light);
+
+    font-family: inherit;
+    font-size: 12px;
+
+    outline: none;
 }
 
 #error {
@@ -290,13 +256,13 @@ button:active {
 }
 
 body.dark #error {
-    color: #ff7070;
+    color: #ff7777;
 }
 
-.notice {
-    margin-top: 16px;
+.info-box {
+    margin-top: 15px;
 
-    padding: 7px;
+    padding: 8px;
 
     background: var(--face);
 
@@ -308,14 +274,13 @@ body.dark #error {
 
 .statusbar {
     display: flex;
-
     gap: 3px;
 
     padding: 3px;
 }
 
 .status {
-    padding: 3px 5px;
+    padding: 3px 6px;
 
     border-top: 2px solid var(--dark);
     border-left: 2px solid var(--dark);
@@ -344,33 +309,16 @@ body.dark #error {
 <div class="window">
 
     <div class="titlebar">
-
-        <div class="titlebar-text">
-            Chat Rooms
-        </div>
-
-        <div class="title-buttons">
-            <button class="title-button">_</button>
-            <button class="title-button">□</button>
-            <button class="title-button">×</button>
-        </div>
-
+        Chat Rooms
     </div>
-
-
-    <div class="menubar">
-        <a href="./">File</a>
-        <a href="./">Edit</a>
-        <a href="./">View</a>
-        <a href="javascript:void(0)">Help</a>
-    </div>
-
 
     <div class="toolbar">
 
-        <div class="toolbar-text">
-            Welcome to Chat Rooms
-        </div>
+        <a href="./">Home</a>
+        <a href="#join">Join Room</a>
+        <a href="#about">About</a>
+
+        <div class="spacer"></div>
 
         <button id="themeButton">
             Dark Mode
@@ -378,31 +326,28 @@ body.dark #error {
 
     </div>
 
-
     <div class="content">
 
         <div class="layout">
 
-            <div class="sidebar">
+            <aside class="sidebar">
 
                 <div class="sidebar-title">
-                    Navigation
+                    Chat Rooms
                 </div>
 
-                <a href="./">Home</a>
-                <a href="#join">Join Room</a>
-                <a href="javascript:void(0)">Help</a>
+                <a href="#join">Join a room</a>
+                <a href="#about">About this site</a>
 
-                <br>
+                <hr>
 
-                <div class="sidebar-title">
-                    Information
-                </div>
+                Room numbers can be anywhere from:
 
-                Rooms can use any number from
-                <b>0 to 1000000</b>.
+                <br><br>
 
-            </div>
+                <b>0 to 1000000</b>
+
+            </aside>
 
 
             <main>
@@ -410,15 +355,15 @@ body.dark #error {
                 <h1>Welcome to Chat Rooms!</h1>
 
                 <div class="description">
-                    Enter a nickname and room number to start chatting.
-                    Give the same room number to your friends so they can join you.
+                    Pick a nickname and enter a room number.
+                    Anyone using the same room number will be able to chat together.
                 </div>
 
 
                 <fieldset id="join">
 
                     <legend>
-                        Join a Room
+                        Join a Chat Room
                     </legend>
 
 
@@ -440,7 +385,7 @@ body.dark #error {
                     <div class="row">
 
                         <label for="room">
-                            Room:
+                            Room number:
                         </label>
 
                         <input
@@ -448,6 +393,7 @@ body.dark #error {
                             type="number"
                             min="0"
                             max="1000000"
+                            autocomplete="off"
                         >
 
                     </div>
@@ -465,9 +411,14 @@ body.dark #error {
                 </fieldset>
 
 
-                <div class="notice">
-                    <b>Note:</b>
-                    Messages are temporary and will eventually disappear.
+                <div
+                    class="info-box"
+                    id="about"
+                >
+                    <b>About:</b><br><br>
+
+                    Chat Rooms is a simple temporary chat site.
+                    Messages will eventually be deleted automatically.
                 </div>
 
             </main>
@@ -484,7 +435,7 @@ body.dark #error {
         </div>
 
         <div class="status">
-            Internet
+            Online
         </div>
 
     </div>
@@ -530,20 +481,23 @@ function updateThemeButton() {
 updateThemeButton();
 
 
-themeButton.onclick = function() {
+themeButton.addEventListener(
+    "click",
+    function() {
 
-    document.body.classList.toggle("dark");
+        document.body.classList.toggle("dark");
 
-    localStorage.setItem(
-        "theme",
-        document.body.classList.contains("dark")
-            ? "dark"
-            : "light"
-    );
+        localStorage.setItem(
+            "theme",
+            document.body.classList.contains("dark")
+                ? "dark"
+                : "light"
+        );
 
-    updateThemeButton();
+        updateThemeButton();
 
-};
+    }
+);
 
 
 const savedNickname =
@@ -579,8 +533,7 @@ function joinRoom() {
     }
 
 
-    error.style.display =
-        "none";
+    error.style.display = "none";
 
 
     localStorage.setItem(
@@ -596,8 +549,10 @@ function joinRoom() {
 }
 
 
-joinButton.onclick =
-    joinRoom;
+joinButton.addEventListener(
+    "click",
+    joinRoom
+);
 
 
 roomInput.addEventListener(
@@ -606,6 +561,18 @@ roomInput.addEventListener(
 
         if (event.key === "Enter") {
             joinRoom();
+        }
+
+    }
+);
+
+
+nicknameInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+            roomInput.focus();
         }
 
     }
