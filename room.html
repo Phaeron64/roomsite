@@ -7,66 +7,190 @@
 <title>Chat Room</title>
 
 <style>
+:root {
+    --page-bg: #d6d6c8;
+    --surface: #c0c0c0;
+    --surface-light: #ffffff;
+    --surface-dark: #808080;
+
+    --text: #000000;
+    --muted: #444444;
+
+    --input-bg: #ffffff;
+    --input-text: #000000;
+
+    --chat-bg: #ffffff;
+
+    --blue: #000080;
+    --link: #0000ee;
+}
+
+body.dark {
+    --page-bg: #161616;
+    --surface: #303030;
+    --surface-light: #555555;
+    --surface-dark: #080808;
+
+    --text: #eeeeee;
+    --muted: #bbbbbb;
+
+    --input-bg: #181818;
+    --input-text: #eeeeee;
+
+    --chat-bg: #181818;
+
+    --blue: #202070;
+    --link: #7f9fff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
-    background: #ffffff;
-    color: #000000;
+
+    background: var(--page-bg);
+    color: var(--text);
+
     font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;
 }
 
-a {
-    color: #0000cc;
-}
-
-.page {
-    width: 750px;
+.site {
+    width: 820px;
     max-width: calc(100% - 20px);
-    margin: 20px auto;
+
+    margin: 18px auto;
 }
 
-.header {
-    background: #000080;
-    color: white;
-    padding: 6px 8px;
+.top {
+    background: var(--surface);
+
+    border-top: 2px solid var(--surface-light);
+    border-left: 2px solid var(--surface-light);
+    border-right: 2px solid var(--surface-dark);
+    border-bottom: 2px solid var(--surface-dark);
+}
+
+.logo {
+    padding: 10px;
+
+    font-size: 21px;
     font-weight: bold;
-    font-size: 18px;
+
+    color: #000080;
+
+    text-shadow: 1px 1px white;
 }
 
-.navigation {
-    background: #c0c0c0;
-    border: 1px solid #808080;
-    padding: 4px 8px;
+body.dark .logo {
+    color: #9da8ff;
+    text-shadow: 1px 1px black;
+}
+
+.menu {
+    min-height: 28px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 3px 5px;
+
+    border-top: 1px solid var(--surface-light);
+}
+
+.menu a {
+    color: var(--text);
+    text-decoration: none;
+
+    padding: 4px 9px;
+}
+
+.menu a:hover {
+    background: var(--blue);
+    color: white;
+}
+
+.spacer {
+    flex: 1;
+}
+
+button {
+    background: var(--surface);
+    color: var(--text);
+
+    border-top: 2px solid var(--surface-light);
+    border-left: 2px solid var(--surface-light);
+    border-right: 2px solid var(--surface-dark);
+    border-bottom: 2px solid var(--surface-dark);
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+
+    padding: 4px 12px;
+
+    cursor: pointer;
+}
+
+button:active {
+    border-top: 2px solid var(--surface-dark);
+    border-left: 2px solid var(--surface-dark);
+    border-right: 2px solid var(--surface-light);
+    border-bottom: 2px solid var(--surface-light);
+}
+
+.main {
+    margin-top: 10px;
+
+    background: var(--surface);
+
+    border-top: 2px solid var(--surface-light);
+    border-left: 2px solid var(--surface-light);
+    border-right: 2px solid var(--surface-dark);
+    border-bottom: 2px solid var(--surface-dark);
+}
+
+.room-title {
+    background: var(--blue);
+    color: white;
+
+    font-weight: bold;
+
+    padding: 5px 8px;
+}
+
+.room-info {
+    padding: 7px 9px;
+
+    border-bottom: 1px solid var(--surface-dark);
+
     font-size: 11px;
-}
-
-.navigation a {
-    margin-right: 15px;
-}
-
-.info {
-    padding: 8px 0;
 }
 
 #messages {
     height: 430px;
-    overflow-y: scroll;
 
-    border: 2px inset #dddddd;
+    margin: 8px;
+
+    overflow-y: auto;
+
+    background: var(--chat-bg);
+    color: var(--text);
+
+    border-top: 2px solid var(--surface-dark);
+    border-left: 2px solid var(--surface-dark);
+    border-right: 2px solid var(--surface-light);
+    border-bottom: 2px solid var(--surface-light);
 
     padding: 8px;
 
-    background: #ffffff;
-
-    font-family:
-        "Courier New",
-        monospace;
-
+    font-family: "Courier New", monospace;
     font-size: 13px;
 }
 
 .message {
-    margin-bottom: 11px;
+    margin-bottom: 12px;
 }
 
 .name {
@@ -74,99 +198,187 @@ a {
     font-weight: bold;
 }
 
+body.dark .name {
+    color: #9aa7ff;
+}
+
 .time {
-    color: #777777;
+    color: var(--muted);
     font-size: 10px;
+
     margin-left: 5px;
 }
 
 .text {
     margin-left: 12px;
+    margin-top: 2px;
+
     white-space: pre-wrap;
     word-break: break-word;
 }
 
-.send-area {
-    margin-top: 8px;
+.send-panel {
+    margin: 8px;
+
+    padding: 7px;
+
+    border-top: 2px solid var(--surface-light);
+    border-left: 2px solid var(--surface-light);
+    border-right: 2px solid var(--surface-dark);
+    border-bottom: 2px solid var(--surface-dark);
+}
+
+.send-row {
+    display: flex;
+
+    gap: 6px;
 }
 
 #messageInput {
-    width: calc(100% - 90px);
+    flex: 1;
 
-    padding: 4px;
+    height: 27px;
 
-    border: 2px inset #dddddd;
+    background: var(--input-bg);
+    color: var(--input-text);
 
-    font-family:
-        "Courier New",
-        monospace;
+    border-top: 2px solid var(--surface-dark);
+    border-left: 2px solid var(--surface-dark);
+    border-right: 2px solid var(--surface-light);
+    border-bottom: 2px solid var(--surface-light);
 
+    padding: 3px 5px;
+
+    font-family: "Courier New", monospace;
     font-size: 13px;
 }
 
-button {
-    width: 80px;
-    padding: 4px;
+#sendButton {
+    width: 85px;
+}
+
+.statusbar {
+    display: flex;
+
+    gap: 3px;
+
+    padding: 3px;
+}
+
+.status-section {
+    padding: 4px 6px;
+
+    border-top: 2px solid var(--surface-dark);
+    border-left: 2px solid var(--surface-dark);
+    border-right: 2px solid var(--surface-light);
+    border-bottom: 2px solid var(--surface-light);
+
+    font-size: 10px;
 }
 
 #status {
-    margin-top: 5px;
-    font-size: 10px;
-    color: #666666;
+    flex: 1;
+}
+
+#username {
+    min-width: 170px;
 }
 
 .footer {
-    margin-top: 18px;
-    border-top: 1px solid #aaaaaa;
-    padding-top: 5px;
+    margin-top: 8px;
+
+    text-align: center;
 
     font-size: 10px;
-    color: #777777;
+    color: var(--muted);
 }
 </style>
 </head>
 
 <body>
 
-<div class="page">
+<div class="site">
 
-    <div
-        class="header"
-        id="roomName"
-    >
-        Chat Room
+    <div class="top">
+
+        <div class="logo">
+            Chat Rooms
+        </div>
+
+        <div class="menu">
+
+            <a href="./">Home</a>
+            <a href="./">Leave Room</a>
+
+            <div class="spacer"></div>
+
+            <button id="themeButton">
+                Dark Mode
+            </button>
+
+        </div>
+
     </div>
 
-    <div class="navigation">
-        <a href="./">Home</a>
-        <a href="./">Leave Room</a>
-        <span id="username"></span>
-    </div>
 
-    <div class="info">
-        Messages in this room are temporary.
-    </div>
+    <div class="main">
 
-    <div id="messages">
-    </div>
-
-    <div class="send-area">
-
-        <input
-            id="messageInput"
-            maxlength="2000"
-            autocomplete="off"
+        <div
+            class="room-title"
+            id="roomName"
         >
+            Chat Room
+        </div>
 
-        <button id="sendButton">
-            Send
-        </button>
+
+        <div class="room-info">
+            Messages in this room are temporary.
+        </div>
+
+
+        <div id="messages"></div>
+
+
+        <div class="send-panel">
+
+            <div class="send-row">
+
+                <input
+                    id="messageInput"
+                    maxlength="2000"
+                    autocomplete="off"
+                    placeholder="Type a message..."
+                >
+
+                <button id="sendButton">
+                    Send
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="statusbar">
+
+            <div
+                class="status-section"
+                id="status"
+            >
+                Connecting...
+            </div>
+
+            <div
+                class="status-section"
+                id="username"
+            >
+                User
+            </div>
+
+        </div>
 
     </div>
 
-    <div id="status">
-        Connecting...
-    </div>
 
     <div class="footer">
         Chat Rooms
@@ -193,6 +405,59 @@ const client =
     );
 
 
+const themeButton =
+    document.getElementById("themeButton");
+
+
+const savedTheme =
+    localStorage.getItem("theme");
+
+
+if (savedTheme === "dark") {
+
+    document.body.classList.add(
+        "dark"
+    );
+
+}
+
+
+function updateThemeButton() {
+
+    themeButton.textContent =
+        document.body.classList.contains("dark")
+        ? "Light Mode"
+        : "Dark Mode";
+
+}
+
+
+updateThemeButton();
+
+
+themeButton.addEventListener(
+    "click",
+    function() {
+
+        document.body.classList.toggle(
+            "dark"
+        );
+
+
+        localStorage.setItem(
+            "theme",
+            document.body.classList.contains("dark")
+            ? "dark"
+            : "light"
+        );
+
+
+        updateThemeButton();
+
+    }
+);
+
+
 const params =
     new URLSearchParams(
         window.location.search
@@ -213,7 +478,10 @@ if (
     room < 0 ||
     room > 1000000
 ) {
-    window.location.href = "./";
+
+    window.location.href =
+        "./";
+
 }
 
 
@@ -244,17 +512,18 @@ document.getElementById(
 document.getElementById(
     "username"
 ).textContent =
-    "Logged in as: " + nickname;
+    "User: " + nickname;
 
 
 const seen =
     new Set();
 
 
-function timeText(value) {
+function formatTime(value) {
 
     const date =
         new Date(value);
+
 
     return date.toLocaleTimeString(
         [],
@@ -263,6 +532,7 @@ function timeText(value) {
             minute: "2-digit"
         }
     );
+
 }
 
 
@@ -271,6 +541,7 @@ function displayMessage(data) {
     if (seen.has(data.id)) {
         return;
     }
+
 
     seen.add(data.id);
 
@@ -309,10 +580,12 @@ function displayMessage(data) {
 
         time.textContent =
             "[" +
-            timeText(data.created_at) +
+            formatTime(data.created_at) +
             "]";
 
+
         header.appendChild(time);
+
     }
 
 
@@ -334,6 +607,7 @@ function displayMessage(data) {
 
     messages.scrollTop =
         messages.scrollHeight;
+
 }
 
 
@@ -370,19 +644,23 @@ async function loadMessages() {
         console.error(error);
 
         statusText.textContent =
-            "Error loading messages.";
+            "Error loading messages";
 
         return;
+
     }
 
 
     for (const message of data) {
+
         displayMessage(message);
+
     }
 
 
     statusText.textContent =
-        "Connected.";
+        "Connected";
+
 }
 
 
@@ -428,9 +706,10 @@ async function sendMessage() {
         console.error(error);
 
         statusText.textContent =
-            "Message could not be sent.";
+            "Message failed";
 
         return;
+
     }
 
 
@@ -442,10 +721,11 @@ async function sendMessage() {
 
 
     statusText.textContent =
-        "Connected.";
+        "Connected";
 
 
     messageInput.focus();
+
 }
 
 
@@ -460,7 +740,9 @@ messageInput.addEventListener(
     function(event) {
 
         if (event.key === "Enter") {
+
             sendMessage();
+
         }
 
     }
@@ -468,11 +750,13 @@ messageInput.addEventListener(
 
 
 client
+
     .channel(
         "room-" + room
     )
 
     .on(
+
         "postgres_changes",
 
         {
@@ -484,22 +768,24 @@ client
         },
 
         function(payload) {
+
             displayMessage(
                 payload.new
             );
+
         }
+
     )
 
     .subscribe(
         function(state) {
 
             if (
-                state ===
-                "SUBSCRIBED"
+                state === "SUBSCRIBED"
             ) {
 
                 statusText.textContent =
-                    "Connected.";
+                    "Connected";
 
             }
 
